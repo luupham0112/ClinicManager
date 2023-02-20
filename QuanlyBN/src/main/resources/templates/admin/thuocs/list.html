@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+   <head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  
+    <title>Kho thuốc</title>
+    <meta content="" name="description">
+    <meta content="" name="keywords">
+  
+    <!-- Favicons -->
+    <link href="/assets/img/favicon.png" rel="icon">
+    <link href="/assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+  
+    <!-- Google Fonts -->
+    <link href="https://fonts.gstatic.com" rel="preconnect">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+  
+    <!-- Vendor CSS Files -->
+    <link href="/assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+    <link href="/assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+    <link href="/assets/vendor/quill/quill.snow.css" rel="stylesheet">
+    <link href="/assets/vendor/quill/quill.bubble.css" rel="stylesheet">
+    <link href="/assets/vendor/remixicon/remixicon.css" rel="stylesheet">
+    <link href="/assets/vendor/simple-datatables/style.css" rel="stylesheet">
+    <link href="/assets/css/table.css" rel="stylesheet">
+    <link href="/assets/css/component.css" rel="stylesheet">
+
+  
+    <!-- Template Main CSS File -->
+    <link href="/assets/css/style.css" rel="stylesheet">
+
+    <!-- Reactjs -->
+  <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script> 
+  <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+</head>
+<body>
+        <!-- ======= Header ======= -->
+        <header id="header" class="header fixed-top d-flex align-items-center">
+
+          <div class="d-flex align-items-center justify-content-between">
+            <a href="index.html" class="logo d-flex align-items-center">
+              <img src="assets/img/logo.png" alt="">
+              <span class="d-none d-lg-block">Health Care</span>
+            </a>
+            <i class="bi bi-list toggle-sidebar-btn"></i>
+          </div><!-- End Logo -->
+      
+          <div class="search-bar">
+            <form class="search-form d-flex align-items-center" method="POST" action="#">
+              <input type="text" name="query" placeholder="Tìm kiếm" title="Enter search keyword">
+              <button type="submit" title="Search"><i class="bi bi-search"></i></button>
+            </form>
+          </div><!-- End Search Bar -->
+      
+          <nav class="header-nav ms-auto">
+            <ul class="d-flex align-items-center">
+      
+              <li class="nav-item d-block d-lg-none">
+                <a class="nav-link nav-icon search-bar-toggle " href="#">
+                  <i class="bi bi-search"></i>
+                </a>
+              </li><!-- End Search Icon-->
+      
+              <li class="nav-item dropdown pe-3">
+      
+                <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
+                  <img src="assets/img/profile-img.jpg" alt="Profile" class="rounded-circle">
+                  <span class="d-none d-md-block dropdown-toggle ps-2">Phạm Lưu</span>
+                </a><!-- End Profile Iamge Icon -->
+      
+                <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
+                  <li class="dropdown-header">
+                    <h6>Phạm Thị Lưu</h6>
+                    <span>Bác sĩ</span>
+                  </li>
+                  <li>
+                    <hr class="dropdown-divider">
+                  </li>
+      
+                  <li>
+                    <a class="dropdown-item d-flex align-items-center" href="taikhoan.html">
+                      <i class="bi bi-gear"></i>
+                      <span>Cài đặt tài khoản</span>
+                    </a>
+                  </li>
+                  <li>
+                    <hr class="dropdown-divider">
+                  </li>
+                  <li>
+                    <a class="dropdown-item d-flex align-items-center" href="#">
+                      <i class="bi bi-box-arrow-right"></i>
+                      <span>Đăng xuất</span>
+                    </a>
+                  </li>
+      
+                </ul><!-- End Profile Dropdown Items -->
+              </li><!-- End Profile Nav -->
+      
+            </ul>
+          </nav><!-- End Icons Navigation -->
+      
+          </header><!-- End Header -->
+      
+            <!-- ======= Sidebar ======= -->
+          <aside id="sidebar" class="sidebar">
+      
+          <ul class="sidebar-nav" id="sidebar-nav">
+      
+              <li class="nav-item">
+              <a class="nav-link " href="index.html">
+                <i class="bi bi-grid"></i>
+                <span>Thống kê</span>
+              </a>
+               </li><!-- End Thong ke Nav -->
+               <li class="nav-item">
+                <a class="nav-link collapsed" data-bs-target="#charts-nav" data-bs-toggle="collapse" href="#" aria-expanded="false">
+                  <i class="bi bi-clipboard2-pulse"></i><span>Khám bệnh</span><i class="bi bi-chevron-down ms-auto"></i>
+                </a>
+                <ul id="charts-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+                  <li>
+                    <a href="forms-tiepnhan.html">
+                      <i class="bi bi-circle"></i><span>Tiếp nhận bệnh nhân</span>
+                    </a>
+                  </li>
+                  <li>
+                    <a href="table-dscho.html">
+                      <i class="bi bi-circle"></i><span>Danh sách bệnh nhân đang chờ</span>
+                    </a>
+                  </li>
+                  <li>
+                    <a href="khambenh.html">
+                      <i class="bi bi-circle"></i><span>Khám bệnh</span>
+                    </a>
+                  </li>
+                 
+                </ul>
+              </li><!-- End Khám bệnh Nav -->
+      
+            <li class="nav-item">
+              <a class="nav-link collapsed" data-bs-target="#forms-nav" data-bs-toggle="collapse" href="#">
+                  <i class="bi bi-people"></i><span>Bệnh nhân</span><i class="bi bi-chevron-down ms-auto"></i>
+              </a>
+              <ul id="forms-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+                  <li>
+                      <a href="tables-data.html">
+                        <i class="bi bi-circle"></i><span>Danh sách bệnh nhân</span>
+                      </a>
+                  </li>
+                  <li>
+                    <a href="form-bn.html">
+                      <i class="bi bi-circle"></i><span>Thông tin bệnh nhân</span>
+                    </a>
+                </li>
+                <li>
+                  <a href="form-bn.html">
+                    <i class="bi bi-circle"></i><span>Chi tiết bệnh nhân </span>
+                  </a>
+               </li>
+                  
+              </ul>
+            </li><!-- End Benh nhan Nav -->
+      
+            <li class="nav-item">
+              <a class="nav-link collapsed" data-bs-target="#tables-nav" data-bs-toggle="collapse" href="#">
+                  <i class="ri-nurse-line"></i><span>Nhân viên</span><i class="bi bi-chevron-down ms-auto"></i>
+              </a>
+              <ul id="tables-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+                <li>
+                  <a href="tables-bs.html">
+                    <i class="bi bi-circle"></i><span>Danh sách nhân viên</span>
+                  </a>
+                </li>
+              </ul>
+            </li><!-- End Bac si Nav -->
+      
+            <li class="nav-item">
+              <a class="nav-link collapsed" data-bs-target="#components-nav" data-bs-toggle="collapse" href="#">
+                <i class="bi bi-capsule"></i><span>Thuốc</span><i class="bi bi-chevron-down ms-auto"></i>
+              </a>
+              <ul id="components-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+                <li>
+                  <a href="tables-thuoc.html">
+                    <i class="bi bi-circle"></i><span>Kho thuốc</span>
+                  </a>   
+                </li>
+                <li>
+                  <a href="table-nhapxuat.html">
+                    <i class="bi bi-circle"></i><span>Quản lý nhập/xuất kho</span>
+                  </a>   
+                </li>
+              </ul>
+            </li><!-- End Components Nav -->
+            
+            <li class="nav-heading">Trang</li>
+            <li class="nav-item">
+              <a class="nav-link collapsed" data-bs-target="#icons-nav" data-bs-toggle="collapse" href="#">
+                <i class="bi bi-person"></i><span>Tài khoản</span><i class="bi bi-chevron-down ms-auto"></i>
+              </a>
+              <ul id="icons-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+                <li>
+                  <a href="taikhoan.html">
+                    <i class="bi bi-circle"></i><span>Thông tin tài khoản</span>
+                  </a>
+                </li>
+                <li>
+                  <a href="table-taikhoan.html">
+                    <i class="bi bi-circle"></i><span>Danh sách tài khoản</span>
+                  </a>
+                </li>
+                
+              </ul>
+            </li>
+      
+      
+            <li class="nav-item">
+              <a class="nav-link collapsed" href="pages-contact.html">
+                <i class="bi bi-envelope"></i>
+                <span>Liên hệ</span>
+              </a>
+            </li><!-- End Contact Page Nav -->
+      
+            <li class="nav-item">
+              <a class="nav-link collapsed" href="pages-register.html">
+                <i class="bi bi-card-list"></i>
+                <span>Đăng ký</span>
+              </a>
+            </li><!-- End Register Page Nav -->
+      
+            <li class="nav-item">
+              <a class="nav-link collapsed" href="pages-login.html">
+                <i class="bi bi-box-arrow-in-right"></i>
+                <span>Đăng nhập</span>
+              </a>
+            </li><!-- End Login Page Nav -->
+      
+          </ul>
+      
+        </aside><!-- End Sidebar-->
+    
+    <main id="main" class="main">
+        <div class="pagetitle">
+            <h1>Kho thuốc</h1>
+            <nav><ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="index.html">Trang chủ</a></li>
+                <li class="breadcrumb-item">Thuốc</li>
+                <li class="breadcrumb-item active">Kho thuốc</li>
+            </ol></nav>
+        </div>
+
+        <section class="section" >
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="card">
+                      <div class="card-body">
+                        <h5 class="card-title">Quản lý thuốc</h5>
+                        <div class="dataTable-wrapper dataTable-loading no-footer sortable searchable fixed-columns">
+
+                             <div class="dataTable-top">                              
+                                  <button type="button" class="btn btn-info" id="btn-nhapkho"></i>Nhập kho</button>   
+                                  <button type="button" class="btn btn-info" id="btn-xuatkho">Xuất kho</button>
+                                  <a th:href="@{/thuocs/add}" class="btn btn-primary"  ><i class="bi bi-plus"></i> Thêm thuốc</a>
+                                 
+                                <div class="dataTable-search">
+                                <form th:action="@{/thuocs/search}">
+                                     <label>Tìm kiếm:</label>
+                                    <input class="dataTable-input" placeholder="Tên thuốc" type="text" name="nameThuoc" id="nameThuoc">
+                                   
+                                    </form>
+                                </div>
+                            </div>
+                            <div class="dataTable-container table-responsive">
+                              <table class="table datatable dataTable-table table-bordered">
+                                  <thead>
+                                      <tr class="table-light">
+                                          <th class="first"scope="col" data-sortable="" style="min-width:50px;width:50px;">
+                                              <a href="#" class="dataTable-sorter">#</a>
+                                          </th>
+                                          <th scope="col" data-sortable="" style="min-width:150px;width:150px;">
+                                              <a href="#" class="dataTable-sorter">Mã thuốc</a>
+                                          </th>
+                                          <th scope="col" data-sortable="" style="min-width:220px;width:220px;">
+                                              <a href="#" class="dataTable-sorter">Tên thuốc</a>
+                                          </th>
+                                          <th scope="col" data-sortable="" style="min-width:150px;width:150px;">
+                                            <a href="#" class="dataTable-sorter">Loại thuốc</a>
+                                        </th>
+                                          <th scope="col" data-sortable="" style="min-width:100px;width: 100px;">
+                                              <a href="#" class="dataTable-sorter">Đơn vị</a>
+                                          </th>
+                                          <th scope="col" data-sortable="" style="min-width:120px;width: 120px;">
+                                              <a href="#" class="dataTable-sorter">SL tồn kho</a>
+                                          </th>
+                                          <th scope="col" data-sortable="" style="min-width:100px;width:100px;">
+                                              <a href="#" class="dataTable-sorter">Đơn giá</a>
+                                          </th>
+                                          
+                                         <th class="end" style="min-width:150px;width:150px;">
+                                          <a href="#" class="dataTable-sorter">Chức năng</a>
+                                   </th>
+                                      </tr>
+                                  </thead>
+                                  <tbody>                                
+                                    <tr class="tb-white" th:each=" thuoc: ${thuocs}">
+                                        <td class="first"  scope="row"><input type="checkbox" name=""></td>
+                                        <td th:text="${thuoc.idThuoc}"></td>
+                                        <td th:text="${thuoc.nameThuoc}"></td>
+                                        <td>[[${thuoc.loaiThuoc}]]</td>
+                                        <td>[[${thuoc.donvi}]]</td>
+                                        <td>[[${thuoc.soluong}]]</td>
+                                        <td>[[${thuoc.dongia}]]</td>
+                                       
+                                        <td class="end">
+                                          <a class="btn btn-dark" th:href="@{'/thuocs/edit/'+ ${thuoc.idThuoc}}" role="button"><i class="bi bi-pencil-square"></i></a>
+                                                
+                                          <a class="btn btn-danger" th:href="@{'/thuocs/delete/'+ ${thuoc.idThuoc}}" role="button"><i class="bi bi-x-lg"></i></a>
+
+                                        </td>                                      
+                                    </tr>
+                              </table>
+                          </div>
+                               
+                            <div class="dataTable-bottom" style="position:sticky;bottom:0;background:#fff;z-index:50;">
+                               
+                                <div class="dataTable-dropdown">
+                                    <label>
+                                        <select class="dataTable-selector">option value="5">5</option>
+                                            <option value="10" selected="">10</option>
+                                            <option value="15">15</option>
+                                            <option value="20">20</option>
+                                            <option value="25">25</option>
+                                        </select> bản ghi 1 trang
+                                    </label>
+                                    </div>
+                                <nav aria-label="Page navigation example " >
+                                  <ul class="pagination ">
+                                    <li class="page-item">
+                                      <a class="page-link" href="#" aria-label="Previous">
+                                        <span aria-hidden="true">&laquo;</span>
+                                      </a>
+                                    </li>
+                                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                                    <li class="page-item">
+                                      <a class="page-link" href="#" aria-label="Next">
+                                        <span aria-hidden="true">&raquo;</span>
+                                      </a>
+                                    </li>
+                                  </ul>
+                                </nav>
+                              </div>   
+                            </div>
+                       
+                          </div>
+
+                    </div>
+                </div>
+            </div>
+        </section>
+       
+     
+    </main>
+    
+     <!-- Vendor JS Files -->
+  <script src="/assets/vendor/apexcharts/apexcharts.min.js"></script>
+  <script src="/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="/assets/vendor/chart.js/chart.umd.js"></script>
+  <script src="/assets/vendor/echarts/echarts.min.js"></script>
+  <script src="/assets/vendor/quill/quill.min.js"></script>
+  <script src="/assets/vendor/simple-datatables/simple-datatables.js"></script>
+  <script src="/assets/vendor/tinymce/tinymce.min.js"></script>
+  <script src="/assets/vendor/php-email-form/validate.js"></script>
+  <script src="/assets/js/component.js"></script>
+
+  <!-- Template Main JS File -->
+  <script src="/assets/js/main.js"></script>
+
+  <!-- Boostrap JS File -->
+  <script src="/bootstrap/js/bootstrap.min.js"></script>
+  <script src="/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="/bootstrap/js/bootstrap.esm.min.js"></script>
+  <script>
+    var btnNhap = document.getElementById("btn-nhapkho");
+    var formThuoc=document.getElementById("phieuNhap");
+    var btnClose = document.getElementById("close-nhap");
+     
+    var btnXuat = document.getElementById("btn-xuatkho");
+    var formXuat=document.getElementById("phieuXuat");
+    var btnClose2 = document.getElementById("close-xuat");
+
+    var btnThem = document.getElementById("btn-themthuoc");
+    var formThem=document.getElementById("formThemthuoc");
+    var btnClose3 = document.getElementById("close-themthuoc");
+   
+    //hiển thị phiếu nhập
+    function showForm () { 
+      formThuoc.style.display="block";
+    }
+    btnNhap.addEventListener("click", showForm);
+    //đóng phiếu nhập
+    function hideForm1(){
+      formThuoc.style.display="none";
+    }
+    btnClose.addEventListener("click", hideForm1);
+   
+    //hiển thị phiếu xuất
+    function showForm2 () { 
+      formXuat.style.display="block";
+    }
+    btnXuat.addEventListener("click", showForm2);
+
+    //đóng phiếu xuất
+    function hideForm2(){
+      formXuat.style.display="none";
+    }
+    btnClose2.addEventListener("click", hideForm2);
+
+    //hiển thị formThem
+    function showForm3 () { 
+      formThem.style.display="block";
+    }
+    btnThem.addEventListener("click", showForm3);
+
+    //đóng phiếu xuất
+    function hideForm3(){
+      formThem.style.display="none";
+    }
+    btnClose3.addEventListener("click", hideForm3);
+   
+  </script>
+  
+</body>
+</html>

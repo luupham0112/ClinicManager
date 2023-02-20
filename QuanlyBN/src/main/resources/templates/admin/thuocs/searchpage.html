@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+     xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+     layout:decorate="~{admin/index.html}">
+   <head>
+   <title>Kho thuốc</title>
+    <meta content="" name="description">
+    <meta content="" name="keywords">
+  
+   </head>
+<body>
+   <div layout:fragment="main">
+    <main id="main" class="main">
+        <div class="pagetitle">
+            <h1>Kho thuốc</h1>
+            <nav><ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="index.html">Trang chủ</a></li>
+                <li class="breadcrumb-item">Thuốc</li>
+                <li class="breadcrumb-item active">Kho thuốc</li>
+            </ol></nav>
+        </div>
+
+        <section class="section" >
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="card">
+                      <div class="card-body">
+                        <h5 class="card-title">Quản lý thuốc</h5>
+                        <div class="dataTable-wrapper dataTable-loading no-footer sortable searchable fixed-columns">
+
+                            <div class="dataTable-top">                              
+                                  <button type="button" class="btn btn-info" id="btn-nhapkho"></i>Nhập kho</button>   
+                                  <button type="button" class="btn btn-info" id="btn-xuatkho">Xuất kho</button>
+                                  <a th:href="@{/thuocs/add}" class="btn btn-primary"  ><i class="bi bi-plus"></i> Thêm thuốc</a>
+                                 
+                                <div class="dataTable-search">
+                                <form th:action="@{/thuocs/searchpage}">
+                                     <label>Từ khóa:</label>
+                                    <input class="dataTable-input" placeholder="Tìm kiếm thuốc" type="text" name="nameThuoc" id="nameThuoc">
+                                    <button type="button" class="btn btn-primary">Tìm</button>
+                                 </form>
+                                </div>
+                            </div>
+                            <div class="row" th:if="${!thuocPage.hasContent()}">
+                            <div class="col">
+                                <div class= " alert alert-danger" role="alert">
+                                <strong> Không tìm thấy tên thuốc</strong>
+                                </div>
+                            
+                            </div>
+                            </div>
+                            <div class="dataTable-container table-responsive">
+                              <table class="table datatable dataTable-table table-bordered" th:if="${thuocPage.hasContent()}">
+                                  <thead>
+                                      <tr class="table-light">
+                                          <th class="first"scope="col" data-sortable="" style="min-width:50px;width:50px;">
+                                              <a href="#" class="dataTable-sorter"></a>
+                                          </th>
+                                          <th scope="col" data-sortable="" style="min-width:150px;width:150px;">
+                                              <a href="#" class="dataTable-sorter">Mã thuốc</a>
+                                          </th>
+                                          <th scope="col" data-sortable="" style="min-width:220px;width:220px;">
+                                              <a href="#" class="dataTable-sorter">Tên thuốc</a>
+                                          </th>
+                                          <th scope="col" data-sortable="" style="min-width:150px;width:150px;">
+                                            <a href="#" class="dataTable-sorter">Loại thuốc</a>
+                                        </th>
+                                          <th scope="col" data-sortable="" style="min-width:100px;width: 100px;">
+                                              <a href="#" class="dataTable-sorter">Đơn vị</a>
+                                          </th>
+                                          <th scope="col" data-sortable="" style="min-width:120px;width: 120px;">
+                                              <a href="#" class="dataTable-sorter">SL tồn kho</a>
+                                          </th>
+                                          <th scope="col" data-sortable="" style="min-width:100px;width:100px;">
+                                              <a href="#" class="dataTable-sorter">Đơn giá</a>
+                                          </th>
+                                          
+                                         <th class="end" style="min-width:150px;width:150px;">
+                                          <a href="#" class="dataTable-sorter"></a>
+                                   </th>
+                                      </tr>
+                                  </thead>
+                                  <tbody>                                
+                                    <tr class="tb-white" th:each=" thuoc, iStat: ${thuocPage.content}">
+                                        <td class="first"  scope="row"><input type="checkbox" name=""></td>
+                                        <td th:text="${thuoc.idThuoc}"></td>
+                                        <td th:text="${thuoc.nameThuoc}"></td>
+                                        <td>[[${thuoc.loaiThuoc}]]</td>
+                                        <td>[[${thuoc.donvi}]]</td>
+                                        <td>[[${thuoc.soluong}]]</td>
+                                        <td>[[${thuoc.dongia}]]</td>
+                                       
+                                        <td class="end">
+                                          <a class="btn btn-dark" th:href="@{'/thuocs/edit/'+ ${thuoc.idThuoc}}" role="button"><i class="bi bi-pencil-square"></i></a>
+                                                
+                                          <a class="btn btn-danger" th:href="@{'/thuocs/delete/'+ ${thuoc.idThuoc}}" role="button"><i class="bi bi-x-lg"></i></a>
+
+                                        </td>                                      
+                                    </tr>
+                              </table>
+                          </div>
+                               
+                            <div class="dataTable-bottom" style="position:sticky;bottom:0;background:#fff;z-index:50;">
+                               
+                                <div class="dataTable-dropdown">
+                                <form>
+                                    <label>
+                                        <select name="size" id="size" class="dataTable-selector"
+                                        onchange="this.form.submit()">
+                                            <option th:selected="${thuocPage.size==5}">5</option>
+                                            <option th:selected="${thuocPage.size==10}">10</option>
+                                            <option th:selected="${thuocPage.size==15}">15</option>
+                                            <option th:selected="${thuocPage.size==20}">20</option>
+                                            <option th:selected="${thuocPage.size==30}">30</option>
+                                        </select> bản ghi 1 trang
+                                    </label>
+                                    </form>
+                                    </div>
+                                <nav aria-label="Page navigation " th:if="${thuocPage.totalPages > 0}">
+                                  <ul class="pagination " >
+                                    <li th:class="${1==thuocPage.number +1 }? 'page-item active': 'page-item'">
+                                      <a th:href="@{/thuocs/searchpage(name=${nameThuoc},size=${thuocPage.size},page=${1})}" 
+                                      class="page-link" aria-label="Previous">
+                                        <span aria-hidden="true">&laquo;</span>
+                                      </a>
+                                    </li>
+                                    <li class="page-item active"
+                                    th:each="pageNumber : ${pageNumbers}"
+                                    th:if="${thuocPage.totalPages >1}"
+                                    th:class="${pageNumber == thuocPage.number + 1} ? 'page-item active' : 'page-item'">
+                                    <a class="page-link" th:href="@{/thuocs/searchpage(name=${nameThuoc}, size=${thuocPage.size},page=${pageNumber})}" th:text="${pageNumber}"></a>
+                                    </li>
+                                    
+                                    <li th:class="${thuocPage.totalPages == thuocPage.number +1 }? 'page-item active': 'page-item'"> 
+                                      <a th:href="@{/thuocs/searchpage(name=${nameThuoc},size=${thuocPage.size},page=${1})}"
+                                      class="page-link"aria-label="Next">
+                                        <span aria-hidden="true">&raquo;</span>
+                                      </a>
+                                    </li>
+                                  </ul>
+                                </nav>
+                              </div>   
+                            </div>
+                       
+                          </div>
+
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+    </div>
+    
+     <!-- Vendor JS Files -->
+  <script src="/assets/vendor/apexcharts/apexcharts.min.js"></script>
+  <script src="/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="/assets/vendor/chart.js/chart.umd.js"></script>
+  <script src="/assets/vendor/echarts/echarts.min.js"></script>
+  <script src="/assets/vendor/quill/quill.min.js"></script>
+  <script src="/assets/vendor/simple-datatables/simple-datatables.js"></script>
+  <script src="/assets/vendor/tinymce/tinymce.min.js"></script>
+  <script src="/assets/vendor/php-email-form/validate.js"></script>
+  <script src="/assets/js/component.js"></script>
+
+  <!-- Template Main JS File -->
+  <script src="/assets/js/main.js"></script>
+
+  <!-- Boostrap JS File -->
+  <script src="/bootstrap/js/bootstrap.min.js"></script>
+  <script src="/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="/bootstrap/js/bootstrap.esm.min.js"></script>
+  <script>
+    var btnNhap = document.getElementById("btn-nhapkho");
+    var formThuoc=document.getElementById("phieuNhap");
+    var btnClose = document.getElementById("close-nhap");
+     
+    var btnXuat = document.getElementById("btn-xuatkho");
+    var formXuat=document.getElementById("phieuXuat");
+    var btnClose2 = document.getElementById("close-xuat");
+
+    var btnThem = document.getElementById("btn-themthuoc");
+    var formThem=document.getElementById("formThemthuoc");
+    var btnClose3 = document.getElementById("close-themthuoc");
+   
+    //hiển thị phiếu nhập
+    function showForm () { 
+      formThuoc.style.display="block";
+    }
+    btnNhap.addEventListener("click", showForm);
+    //đóng phiếu nhập
+    function hideForm1(){
+      formThuoc.style.display="none";
+    }
+    btnClose.addEventListener("click", hideForm1);
+   
+    //hiển thị phiếu xuất
+    function showForm2 () { 
+      formXuat.style.display="block";
+    }
+    btnXuat.addEventListener("click", showForm2);
+
+    //đóng phiếu xuất
+    function hideForm2(){
+      formXuat.style.display="none";
+    }
+    btnClose2.addEventListener("click", hideForm2);
+
+    //hiển thị formThem
+    function showForm3 () { 
+      formThem.style.display="block";
+    }
+    btnThem.addEventListener("click", showForm3);
+
+    //đóng phiếu xuất
+    function hideForm3(){
+      formThem.style.display="none";
+    }
+    btnClose3.addEventListener("click", hideForm3);
+   
+  </script>
+  
+</body>
+</html>

@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+     xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+     layout:decorate="~{admin/index.html}">
+   <head>
+   <title>Thông tin thuốc</title>
+    <meta content="" name="description">
+    <meta content="" name="keywords">
+   
+   </head>
+<body>
+     <div layout:fragment="main">
+    <!-- =========== Main ============== -->
+              <main id="main" class="main">
+                <div class="pagetitle">
+                    <h1>Danh sách tài khoản</h1>
+                    <nav><ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="index.html">Trang chủ</a></li>
+                        <li class="breadcrumb-item">Tài khoản</li>
+                        <li class="breadcrumb-item active">Danh sách tài khoản</li>
+                    </ol></nav>
+                </div>
+                <section class="section" >
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="card">
+                              <div class="card-body">
+                                <h5 class="card-title">Danh sách tài khoản</h5>
+                                <div class="dataTable-wrapper dataTable-loading no-footer sortable searchable fixed-columns">
+                                    <div class="dataTable-top">                          
+                                        <div class="dataTable-search">
+                                         <laber>Từ khóa:</laber>
+                                          <input class="dataTable-input" placeholder="Tìm tài khoản" type="text">                                         
+                                        </div>                                            
+                                    </div>
+                                        <div class="dataTable-container table-responsive">
+                                            <table class="table datatable dataTable-table table-bordered">
+                                                <thead>
+                                                    <tr class="table-light">
+                                                        <th class="end" style="min-width:200px;width:200px;">
+                                                           <a href="#" class="dataTable-sorter">Họ và tên </a>
+                                                        </th>
+                                                        <th scope="col" data-sortable="" style="min-width:150px;width: 150px;">
+                                                            <a href="#" class="dataTable-sorter">Email</a>
+                                                        </th>
+                                                        
+                                                        <th scope="col" data-sortable="" style="min-width:150px;width:150px;">
+                                                            <a href="#" class="dataTable-sorter">Tên đăng nhập</a>
+                                                        </th>
+                                                       
+                                                        <th scope="col" data-sortable="" style="min-width:250px;width: 250px;">
+                                                            <a href="#" class="dataTable-sorter">Mật khẩu</a>
+                                                        </th>
+                                                       
+                                                        </th>
+                                                        <th scope="col" data-sortable="" style="min-width:200px;width:200px;">
+                                                            <a href="#" class="dataTable-sorter"></a>
+                                                       </th>
+                                                      
+                                                    </tr>
+                                                </thead>
+                                                <tbody>                                
+                                                  <tr class="tb-white" th:each=" user, iStat : ${users}">
+                                                      <td class="first"  scope="row">[[${user.hotenTk}]]</td>
+                                                      <td>[[${user.email}]]</td>
+                                                      <td>[[${user.userName}]]</td>
+                                                      <td>[[${user.passWord}]]</td>
+                                                      
+                                                     
+                                                      <td class="end">
+											<a class="btn btn-info" th:href="@{'/users/view/' + ${user.userName}}"role="button"><i class="bi bi-info-circle"></i></a> 
+											<a class="btn btn-dark" th:href="@{'/users/edit/' + ${user.userName}}"  role="button"><i class="bi bi-pencil-square"></i></a> 
+											<a class="btn btn-danger" th:href="@{'/users/delete/' + ${user.userName}}" role="button"><i class="bi bi-x-lg"></i></a>
+											 </td>                                      
+                                                  </tr>
+                                                                      
+                                                </tbody>
+                                            </table>
+                                        </div> 
+                                       
+                                    </div>
+                               
+                                  </div>
+        
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            
+            </main>
+            </div>
+ 
+              
+</body>
+</html>
