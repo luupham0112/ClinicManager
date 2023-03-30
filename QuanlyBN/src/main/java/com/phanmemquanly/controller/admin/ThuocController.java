@@ -24,16 +24,18 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.phanmemquanly.domain.DonthuocDetail;
 import com.phanmemquanly.domain.Thuoc;
 import com.phanmemquanly.model.ThuocDto;
 import com.phanmemquanly.service.ThuocService;
 
 @Controller
-@RequestMapping("thuocs")
+@RequestMapping("admin/thuocs")
 //Thêm thuốc
 public class ThuocController {
 	@Autowired
 	ThuocService thuocService;
+	
 	
 	@GetMapping("add")
 	public String add(Model model) {
@@ -55,17 +57,18 @@ public class ThuocController {
 		
 			return new ModelAndView("admin/thuocs/form",model);
 		}
-		model.addAttribute("message","Thuoc khong ton tai");
+		model.addAttribute("message","Thuốc đã được lưu");
 		return new ModelAndView("redirect:/thuocs",model);
 		
 	}
+
 	
 	// Xoa du lieu
 	@GetMapping("delete/{idThuoc}")
 	public ModelAndView delete(ModelMap model, @PathVariable("idThuoc") int idThuoc) {
 		thuocService.deleteById(idThuoc);
-		model.addAttribute("message", "Thuoc da duoc xoa");
-		return new ModelAndView("redirect:/thuocs/searchpage",model)	;
+		model.addAttribute("message", "Thuốc đã được xóa!");
+		return new ModelAndView("redirect:/admin/thuocs/searchpage",model)	;
 	}
 	
 	//Lưu và chuyển hướng đến trang danh sách
@@ -77,8 +80,8 @@ public class ThuocController {
 			
 		thuocService.save(entity);
 		
-		model.addAttribute("message", "Thuoc da duoc luu");
-		return new ModelAndView( "redirect:/thuocs/searchpage",model);	
+		model.addAttribute("message", "Thuốc đã được lưu!");
+		return new ModelAndView( "redirect:/admin/thuocs/searchpage",model);	
 	}
 	// Trả về danh sách thuốc
 	@RequestMapping("searchpage")

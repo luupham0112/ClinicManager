@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{admin/index.html}">
+<head>
+<title>Hồ sơ bệnh án</title>
+<meta content="" name="description">
+<meta content="" name="keywords">
+
+<style type="text/css">
+#main #bodypage {
+	background: rgb(204, 204, 204);
+	font-family: Helvetica, Arial, Sans-Serif;
+	font-size: 16px;
+	line-height: 25px;
+}
+
+page {
+	background: white;
+	display: block;
+	margin: 0 auto;
+	margin-bottom: 0.5cm;
+	box-shadow: 0 0 0.5cm rgba(0, 0, 0, 0.5);
+}
+
+@page {
+	margin: 20mm 0 10mm 0;
+}
+
+page[size="A4"] {
+	width: 21cm;
+	/*height: 29.7cm; */
+	padding-bottom: 50px;
+}
+
+page[size="A4"][layout="portrait"] {
+	width: 29.7cm;
+	height: 21cm;
+}
+
+page[size="A3"] {
+	width: 29.7cm;
+	height: 42cm;
+}
+
+page[size="A3"][layout="portrait"] {
+	width: 42cm;
+	height: 29.7cm;
+}
+
+page[size="A5"] {
+	width: 14.8cm;
+	height: 20.5cm;
+	font-size: 14px;
+}
+
+page[size="A5"][layout="portrait"] {
+	width: 21cm;
+	height: 14.8cm;
+}
+
+@page {
+	margin-top: 30cm;
+	margin-bottom: 20cm;
+}
+
+@media print {
+	body * {
+		display: none;
+	}
+	page, page * {
+		display: block;
+	}
+	page {
+		margin-top: 50px !important;
+		box-shadow: 0;
+		background: #fff;
+		border: 0px;
+		box-shadow: 0 0 0cm rgba(0, 0, 0, 0);
+	}
+	.pagebreak {
+		page-break-after: always;
+	}
+	div {
+		page-break-inside: avoid;
+	}
+}
+
+.drug_list table {
+	/*border: 1px solid #dbd7c7;*/
+	border-collapse: collapse;
+	width: 100%;
+}
+
+.drug_list tr {
+	background: #ecf0f1;
+	border: none;
+}
+
+.drug_list tr:nth-of-type(odd) {
+	background: #fff;
+}
+
+.drug_list td {
+	padding: 5px 3px 5px 3px;
+	/*border-bottom: 1px solid #dbd7c7;*/
+}
+
+.drug_list td span {
+	color: brown;
+}
+
+.top-container {
+	padding-top: 0.4cm;
+	/*				padding-left: 0.4cm;
+            padding-right: 0.4cm;*/
+}
+
+.top-container .lleft {
+	text-align: left;
+	width: 15%;
+	float: left;
+	margin-right: 2%
+}
+
+.top-container .lleft img {
+	width: 100%
+}
+
+.top-container .left {
+	text-align: left;
+	width: 50%;
+	float: left;
+}
+
+.top-container .right {
+	text-align: right;
+	width: 49%;
+	float: left;
+}
+
+.main-title {
+	margin-top: 0.4cm;
+	text-align: center;
+	font-size: 1.6em;
+	margin-bottom: 3px;
+}
+
+.clear {
+	clear: both;
+}
+
+.info-container {
+	padding-top: 0cm;
+	/*				padding-left: 0.4cm;
+            padding-right: 0.4cm;*/
+	line-height: 26px
+}
+
+.info-container .left {
+	text-align: left;
+	width: 70%;
+	float: left;
+}
+
+.info-container .right {
+	text-align: left;
+	width: 30%;
+	float: left;
+}
+
+.main-decision {
+	padding-top: 0cm;
+	padding-left: 0.4cm;
+	padding-right: 0.4cm;
+	line-height: 26px;
+	text-align: left;
+}
+
+.drug_list {
+	/*				padding-top: 0.4cm;
+            padding-left: 0.4cm;
+            padding-right: 0.4cm;*/
+	line-height: 20px;
+	text-align: left;
+}
+
+.bottom-container {
+	padding-top: 0.1cm;
+	padding-left: 0.4cm;
+	padding-right: 0.4cm;
+	line-height: 20px;
+	text-align: justify;
+}
+
+.bottom-container .left {
+	width: 50%;
+	float: left;
+	text-align: left;
+	margin-right: 5%;
+	text-align: justify;
+}
+
+.bottom-container .right {
+	width: 45%;
+	text-align: center;
+	float: right;
+}
+
+.total_price {
+	padding-top: 0.3cm;
+	padding-left: 0.4cm;
+	padding-right: 0.4cm;
+	line-height: 20px;
+	text-align: justify;
+}
+
+.drug_list table tr {
+	padding-bottom: 0px;
+	vertical-align: top;
+}
+
+.drug_list table td {
+	vertical-align: top;
+}
+
+.bottom-fixed {
+	position: absolute;
+	bottom: 0cm;
+	left: 0.4cm;
+	right: 0.4cm;
+	width: 14cm;
+}
+
+.column-25 {
+	width: 25%;
+	float: left;
+}
+.margin-left-50 {
+    margin-left: 50px;
+    font-weight:bold;
+}
+
+</style>
+<script type="text/javascript">
+	function printMe() {
+		window.print()
+	}
+</script>
+
+</head>
+<body>
+	<!-- ======= Main ======= -->
+	<div layout:fragment="main">
+		<main class="main" id="main">
+		
+		<div class="pagetitle">
+	 <a class="btn btn-primary" th:href="@{'/admin/patients/view/' + ${donthuoc.patient.idBenhNhan}}"role="button">	
+		<i class="bi bi-arrow-left-square"></i></i>Quay lại hồ sơ bệnh nhân</a> 
+		<a class="btn btn-success" th:href="${'/admin/donthuoc/in/' + donthuoc.idDonthuoc}" role="button"> 
+		<i class="bi bi-printer"></i>In</a> 
+		</div>
+		
+		<!-- End Page Title -->
+		<div class="form-bolder"></div>
+		<section class="section ">
+			<div class="row">
+				<div class="col-lg-12">
+					<div class="card" style="margin-bottom: 0;">
+
+						<h5 class="card-title " style="margin-left: 15px;">Chi tiết toa thuốc</h5>
+
+						<div id="bodypage">
+							    <page size="A5" style="position:relative; padding:10px 30px">
+        <div class="top-container">
+
+            <div class="left">
+                <strong>QL Phòng khám</strong>
+               <br>
+                SĐT:0858750567<br>
+                Số hồ sơ:
+                <strong>
+                  </strong>
+            </div>
+            <div class="right">
+                Địa chỉ phòng khám<br>
+                <b>Thời gian khám: 8h-17h30</b>
+                <br>
+                Thời gian mở cửa: T2-T7
+            </div>
+            <div class="clear"></div>
+        </div>
+       <form method="post" th:object="${donthuoc}">
+        <h2 class="main-title"><strong>TOA THUỐC</strong></h2>
+        <div class="info-container" style="font-size:14px">
+            <div class="left">
+                Họ tên:
+                <b style="text-transform: uppercase;" th:text="${donthuoc.patient.hotenBN}"></b>
+                <br>Tuổi: <span id="pres_ngaysinh" th:text="${donthuoc.patient.tuoi}"></span>
+                <br>
+                Địa chỉ: <span th:text="${donthuoc.patient.diaChi}"  ></span> <br>
+            </div>
+            <div class="right">
+                Giới tính: 
+                 <span th:if="${donthuoc.patient.gioiTinh==0}">Nam</span>
+				 <span th:if="${donthuoc.patient.gioiTinh==1}">Nữ</span>
+				<span th:if="${donthuoc.patient.gioiTinh==2}">Khác</span>
+
+            </div>
+             <div>Ngày khám:<span th:text="${donthuoc.ngayTao}"></span></div>
+        </div>
+        <div class="main-decision">
+            <!-- Chẩn đoán: <b><i>Suy thận mạn</i></b> -->
+        </div>
+        <div class="drug_list">
+            <table width="100%" border="0">
+           
+                <tbody>
+                
+                    <tr th:each=" item : ${donthuocdetails}">
+                        <td width="85%">
+                            <b  th:text="${item.thuoc.nameThuoc}"></b> 
+                            <br>
+                            <div style="padding-left: 20px;font-size: 0.92em;" ><span
+                                    style="color:#000" th:text="${item.ghichu}"></span>
+                            </div>
+                        </td>
+                        <td width="10%"  th:text="${item.soluong}" ></td>
+                        <td width="5%" th:text="${item.thuoc.dangThuoc}"></td>
+                    </tr>
+                   
+                    
+                </tbody>
+            </table>
+        </div>
+        <div class="total_price">
+           
+        </div>
+
+        <div class="bottom-container">
+           
+
+        </div>
+        <div style="height: 20px">&nbsp;</div>
+        <div class="bottom-fixed" style="font-size:14px;position: unset; margin-left: 15px">
+           
+            <br style="clear:both">
+            <div class="bottom-container">
+                <div class="left">
+
+                </div>
+                <div class="right">
+                  Bác sĩ kê đơn <br>
+                    <br>
+                    <br>
+                    <b th:text="${donthuoc.bacsi}"></b>
+
+                </div>
+                <br style="clear:both">
+            </div>
+            <div style="font-size:10px;margin-top:5px">
+                <span>* Vui lòng mang theo đơn thuốc này khi tái khám! * Toa thuốc chỉ có giá trị cho lần khám bệnh
+                    này.</span> <b style="font-size:12px">03/04/2023</b>
+            </div>
+        </div>
+        </form>
+    </page>
+						</div>
+					</div>
+
+				</div>
+			</div>
+
+
+		</section>
+		 
+                  
+
+		</main>
+
+
+	</div>
+
+
+</body>
+</html>

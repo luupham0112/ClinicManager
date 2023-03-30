@@ -11,6 +11,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.repository.query.FluentQuery.FetchableFluentQuery;
 
 import com.phanmemquanly.domain.Patient;
+import com.phanmemquanly.model.PatientDto;
 
 public interface PatientService {
 
@@ -43,6 +44,8 @@ public interface PatientService {
 	Optional<Patient> findById(Integer id);
 
 	List<Patient> findAllById(Iterable<Integer> ids);
+	
+	
 
 	List<Patient> findAll();
 
@@ -57,6 +60,8 @@ public interface PatientService {
 	Page<Patient> findByHotenBNContaining(String hotenBN, Pageable pageable);
 
 	List<Patient> findByHotenBNContaining(String hotenBN);
+
+	List<PatientDto> getPatient();
 
 	
 }

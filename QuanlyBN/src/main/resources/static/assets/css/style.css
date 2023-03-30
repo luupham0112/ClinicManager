@@ -835,7 +835,17 @@ h6 {
   flex-shrink: 0;
   flex-grow: 0;
 }
+.menu-icon {
+  font-size: 40px;
+  line-height: 0;
+  width: 150px;
+  height: 150px;
+  flex-shrink: 0;
+  flex-grow: 0;
+  background: rgb(36, 115, 172);
+  color: #fff;
 
+}
 .dashboard .sales-card .card-icon {
   color: #4154f1;
   background: #f6f6fe;

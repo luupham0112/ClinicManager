@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+     layout:decorate="~{admin/index.html}">
+<head>
+
+<title>Danh sách bệnh nhân</title>
+<meta content="" name="description">
+<meta content="" name="keywords">
+
+</head>
+<body>
+    <div layout:fragment="main">
+
+	<main id="main" class="main">
+	<div class="pagetitle">
+		<h1>Danh sách bệnh nhân</h1>
+		<nav>
+			<ol class="breadcrumb">
+				<li class="breadcrumb-item"><a th:href="@{/admin/trang-chu}">Trang chủ</a></li>
+				<li class="breadcrumb-item">Bệnh nhân</li>
+				<li class="breadcrumb-item active">Danh sách bệnh nhân</li>
+			</ol>
+		</nav>
+	</div>
+	<section class="section">
+		<div class="row">
+			<div class="col-lg-12">
+				<div class="card">
+					<div class="card-body">
+						<h5 class="card-title">Danh sách bệnh nhân</h5>
+						
+						<div class="dataTable-wrapper dataTable-loading no-footer sortable searchable fixed-columns">                           
+						
+						
+						<div th:if="${message !=null}" class="alert alert-success alert-dismissible fade show" role="alert"><i class="bi bi-check-circle me-1"></i>
+						   <i>[[${message}]]</i>
+                           <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                       </div>
+                       
+							<div class="dataTable-top">
+								<div class="dataTable-dropdown">
+									<a class="btn btn-primary"th:href="@{/admin/patients/add}" role="button">
+									<i class="bi bi-plus-lg"></i> Thêm mới bệnh nhân</a>
+								</div>
+								<div class="dataTable-search">
+                                <form th:action="@{/admin/patients/searchpage}">
+                                     <label>Tìm kiếm:</label>
+                                    <input class="dataTable-input" placeholder="Tên bệnh nhân" type="text" name="hotenBN" id="hotenBN">
+                                    </form>
+                                </div>
+							</div>
+							<div class="row" th:if="${!patientPage.hasContent()}">
+                            <div class="col">
+                                <div class= " alert alert-danger" role="alert">
+                                <strong> Không tồn tại bệnh nhân</strong>
+                                </div>
+                            
+                            </div>
+                            </div>
+							
+							<div class="dataTable-container table-responsive">
+								<table class="table datatable dataTable-table table-bordered">
+									<thead>
+										<tr class="table-light">
+											<th class="first" scope="col" data-sortable=""
+												style="min-width: 50px; width: 50px;"></th>
+											<th scope="col" data-sortable=""
+												style="min-width: 150px; width: 150px;"><a href="#"
+												class="dataTable-sorter">Mã bệnh nhân</a></th>
+											<th scope="col" data-sortable=""
+												style="min-width: 200px; width: 200px;"><a href="#"
+												class="dataTable-sorter">Họ và tên</a></th>
+											<th scope="col" data-sortable=""
+												style="min-width: 200px; width: 200px;"><a href="#"
+												class="dataTable-sorter">CCCD</a></th>
+											<th scope="col" data-sortable=""
+												style="min-width: 150px; width: 150px;"><a href="#"
+												class="dataTable-sorter">Ngày sinh</a></th>
+											<th scope="col" data-sortable=""
+												style="min-width: 120px; width: 120px;"><a href="#"
+												class="dataTable-sorter">Giới tính</a></th>
+											<th scope="col" data-sortable=""
+												style="min-width: 80px; width: 80px;"><a href="#"
+												class="dataTable-sorter">Tuổi</a></th>
+											<th scope="col" data-sortable=""
+												style="min-width: 150px; width: 150px;"><a href="#"
+												class="dataTable-sorter">Đối tượng</a></th>
+											<th scope="col" data-sortable=""
+												style="min-width: 350px; width: 350px;"><a href="#"
+												class="dataTable-sorter">Điạ chỉ</a></th>
+											<th class="end" style="min-width: 200px; width: 200px;">
+												<a href="#" class="dataTable-sorter">Chức năng</a>
+											</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr class="tb-white" th:each=" patient, iStat: ${patientPage.content}">
+											<td class="first" scope="row"><input type="checkbox"
+												name=""></td>
+											<td>[[${patient.idBenhNhan}]]</td>
+											<td th:text="${patient.hotenBN}"></td>
+											<td th:text="${patient.CCCD}"></td>
+											<td th:text="${patient.ngaysinh}"></td>
+											<td  >
+											   <span th:if="${patient.gioiTinh==0}">Nam</span>
+											    <span th:if="${patient.gioiTinh==1}">Nữ</span>
+											     <span th:if="${patient.gioiTinh==2}">Khác</span>
+											</td>
+											<td th:text="${patient.tuoi}"></td>
+											<td >
+											    <span th:if="${patient.doituong==0}">Ưu tiên</span>
+											    <span th:if="${patient.doituong==1}">Không ưu tiên</span>
+											</td>
+											<td th:text="${patient.diaChi}"></td>
+											<td class="end">
+											<a class="btn btn-info" th:href="@{'/admin/patients/view/' + ${patient.idBenhNhan}}"role="button"><i class="bi bi-info-circle"></i></a> 
+											<a class="btn btn-dark" th:href="@{'/admin/patients/edit/' + ${patient.idBenhNhan}}"  role="button"><i class="bi bi-pencil-square"></i></a> 
+											<a class="btn btn-danger" role="button"
+											    th:data-id="${patient.idBenhNhan}"
+											    th:data-name="${patient.hotenBN}"
+											    onclick="showConfirmDialog(this.getAttribute('data-id'),this.getAttribute('data-name'))">
+											    <i class="bi bi-x-lg"></i>
+											    </a>
+											 </td>
+										</tr>
+							
+									</tbody>
+								</table>
+								<script>
+        function showConfirmDialog(id,name) {
+            $('#hotenBN').text(name);
+            $('#yes').attr('href', '/admin/patients/delete/' + id );
+            $('#confirmId').modal('show');
+        }
+
+     </script>
+								<div class="modal fade" id="confirmId" tabindex="-1" aria-hidden="true" role="dialog">
+                                   <div class="modal-dialog">
+                                       <div class="modal-content">
+                                            <div class="modal-header">
+                                                 <h5 class="modal-title">Cảnh báo</h5>
+                                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                             </div>
+                                             <div class="modal-body">Bạn có chắc chắn muốn xóa<span id="hotenBN"></span> ?</div>
+                                             <div class="modal-footer">
+                                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+                                                 <a id="yes" type="button" class="btn btn-danger">Xóa</a>
+                                             </div>
+                                        </div>
+                                    </div>
+                                </div>
+              
+							</div>
+							
+						<!-- Phân trang -->
+						<div class="dataTable-bottom" style="position:sticky;bottom:0;background:#fff;z-index:50;">                   
+                                <div class="dataTable-dropdown">
+                                <form>
+                                    <label>
+                                        <select name="size" id="size" class="dataTable-selector"
+                                        onchange="this.form.submit()">
+                                            <option th:selected="${patientPage.size==5}">5</option>
+                                            <option th:selected="${patientPage.size==10}">10</option>
+                                            <option th:selected="${patientPage.size==15}">15</option>
+                                            <option th:selected="${patientPage.size==20}">20</option>
+                                            <option th:selected="${patientPage.size==30}">30</option>
+                                        </select> bản ghi 1 trang
+                                    </label>
+                                    </form>
+                                    </div>
+                                <nav aria-label="Page navigation " th:if="${patientPage.totalPages > 0}">
+                                  <ul class="pagination " >
+                                    <li th:class="${1==patientPage.number +1 }? 'page-item active': 'page-item'">
+                                      <a th:href="@{/admin/patients/searchpage(name=${hotenBN},size=${patientPage.size},page=${1})}" 
+                                      class="page-link" aria-label="Previous">
+                                        <span aria-hidden="true">&laquo;</span>
+                                      </a>
+                                    </li>
+                                    <li class="page-item active"
+                                    th:each="pageNumber : ${pageNumbers}"
+                                    th:if="${patientPage.totalPages >1}"
+                                    th:class="${pageNumber == patientPage.number + 1} ? 'page-item active' : 'page-item'">
+                                    <a class="page-link" th:href="@{/admin/patients/searchpage(name=${hotenBN}, size=${patientPage.size},page=${pageNumber})}" th:text="${pageNumber}"></a>
+                                    </li>
+                   
+                                    <li th:class="${patientPage.totalPages == patientPage.number +1 }? 'page-item active': 'page-item'"> 
+                                      <a th:href="@{/admin/patients/searchpage(name=${hotenBN},size=${patientPage.size},page=${1})}"
+                                      class="page-link"aria-label="Next">
+                                        <span aria-hidden="true">&raquo;</span>
+                                      </a>
+                                    </li>
+                                  </ul>
+                                </nav>
+                              </div>   
+                            </div>
+						</div>
+
+					</div>
+
+				</div>
+			</div>
+		</div>
+	</section>
+ </main>
+    
+    </div>
+    
+</body>
+</html>

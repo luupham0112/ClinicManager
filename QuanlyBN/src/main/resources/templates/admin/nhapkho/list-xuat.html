@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{admin/index.html}">
+<head>
+<title>Thông tin bệnh nhân</title>
+<meta content="" name="description">
+<meta content="" name="keywords">
+</head>
+<body>
+	<div layout:fragment="main">
+	 <main id="main" class="main">
+        <div class="pagetitle">
+            <h1>Quản lý nhập kho</h1>
+            <nav>
+              <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="index.html">Trang chủ</a></li>
+                <li class="breadcrumb-item">Thuốc</li>
+                <li class="breadcrumb-item active">Quản lý nhập kho</li>
+              </ol>
+            </nav>
+        </div><!-- End Page Title -->
+        <section class="section" >
+          <div class="row mb-2">
+              <div class="col-lg-12">
+                  <div class="card">
+                    <div class="card-body">
+                      <h5 class="card-title">Danh sách nhập kho</h5>   
+                      <div class="dataTable-wrapper dataTable-loading no-footer sortable searchable fixed-columns">
+                        <div class="dataTable-top">
+                          <div class="row mb-3">
+                            <label for="inputEmail3" class="col-sm-2 col-form-label">Loại phiếu</label>
+                            <div class="col-sm-2">
+                              <select id="inputState" class="form-select">
+                                <option selected="">Nhập</option>
+                                <option>Xuất</option>
+                              </select>
+                            </div>
+                            <label for="inputEmail3" class="col-sm-1 col-form-label">Từ</label>
+                            <div class="col-sm-3">
+                              <input type="date" class="form-control" >
+                            </div>
+                            <label for="inputEmail3" class="col-sm-1 col-form-label">Đến</label>
+                            <div class="col-sm-3">
+                              <input type="date" class="form-control" >
+                            </div>   
+                          </div>
+                          <button type="submit" class="btn btn-primary" style="margin-left: 15px">Xem</button>
+                          <div class="dataTable-search">
+                           
+                       </div>
+                                 
+                      </div>       
+                          <div class="dataTable-container table-responsive">
+                            <table class="table datatable dataTable-table table-bordered">
+                                <thead>
+                                    <tr class="table-light">
+                                        <th class="first"scope="col" data-sortable="" style="min-width:50px;width:50px;">
+                                            <a href="#" class="dataTable-sorter">Mã phiếu</a>
+                                        </th>
+                                       
+                                        <th scope="col" data-sortable="" style="min-width:100px;width:100px;">
+                                            <a href="#" class="dataTable-sorter">Loại phiếu</a>
+                                        </th>
+                                        
+                                        <th scope="col" data-sortable="" style="min-width:500px;width: 500px;">
+                                            <a href="#" class="dataTable-sorter">Ngày tạo</a>
+                                        </th>
+                                       
+                                       <th class="end" style="min-width:150px;width:150px;">
+                                        <a href="#" class="dataTable-sorter">Chức năng</a>
+                                 </th>
+                                    </tr>
+                                </thead>
+                                <tbody>                                
+                                  <tr class="tb-white">
+                                      <td class="first"  scope="row"><span>1</span></td>
+                                      <td><span>Phiếu nhập kho</span></td>
+                                      
+                                      <td><span></span></td>
+                                      <td class="end">
+                                      <a class="btn btn-dark" href="form-bn.html" role="button"><i class="bi bi-pencil-square"></i></a>
+                                      <a class="btn btn-danger" href="form-bn.html" role="button"><i class="bi bi-trash"></i></a>
+                                      <a class="btn btn-info" href="form-bn.html" role="button"><i class="bi bi-info-circle"></i></a>
+                                      
+
+                                    </td>                                      
+                                  </tr>
+                                  <tr class="tb-white">
+                                    <td class="first"  scope="row"><span>2</span></td>
+                                    <td><span>Phiếu nhập kho</span></td>
+                                    <td><span></span></td>
+                                    <td class="end">
+                                      <a class="btn btn-dark" href="form-bn.html" role="button"><i class="bi bi-pencil-square"></i></a>
+                                      <a class="btn btn-danger" href="form-bn.html" role="button"><i class="bi bi-trash"></i></a>
+                                      <a class="btn btn-info" href="form-bn.html" role="button"><i class="bi bi-info-circle"></i></a>
+                                      
+
+                                    </td>                                      
+                                </tr>
+                            </table>
+                        </div>
+                             
+                          <div class="dataTable-bottom" style="position:sticky;bottom:0;background:#fff;z-index:50;">
+                             
+                              <div class="dataTable-dropdown">
+                                  <label>
+                                      <select class="dataTable-selector">option value="5">5</option>
+                                          <option value="10" selected="">10</option>
+                                          <option value="15">15</option>
+                                          <option value="20">20</option>
+                                          <option value="25">25</option>
+                                      </select> bản ghi 1 trang
+                                  </label>
+                                  </div>
+                              <nav aria-label="Page navigation example " >
+                                <ul class="pagination ">
+                                  <li class="page-item">
+                                    <a class="page-link" href="#" aria-label="Previous">
+                                      <span aria-hidden="true">&laquo;</span>
+                                    </a>
+                                  </li>
+                                  <li class="page-item"><a class="page-link" href="#">1</a></li>
+                                  <li class="page-item"><a class="page-link" href="#">2</a></li>
+                                  <li class="page-item"><a class="page-link" href="#">3</a></li>
+                                  <li class="page-item">
+                                    <a class="page-link" href="#" aria-label="Next">
+                                      <span aria-hidden="true">&raquo;</span>
+                                    </a>
+                                  </li>
+                                </ul>
+                              </nav>
+                            </div>   
+                          </div>
+                     
+                        </div>
+
+                  </div>
+              </div>
+          </div>
+      </section>
+       
+
+    </main><!-- End Main-->
+
+	</div>
+
+
+</body>
+</html>

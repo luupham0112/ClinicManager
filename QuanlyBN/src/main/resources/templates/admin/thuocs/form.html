@@ -16,7 +16,7 @@
                     <h1>Thông tin Thuốc</h1>
                     <nav>
                       <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="index.html">Trang chủ</a></li>
+                        <li class="breadcrumb-item"><a a th:href="@{/admin/home}">Trang chủ</a></li>
                         <li class="breadcrumb-item">Thuốc</li>
                         <li class="breadcrumb-item active">Thông tin thuốc</li>
                       </ol>
@@ -30,29 +30,51 @@
                                   <h5 class="card-title">Thông tin thuốc</h5>   
                                   <!-- Thông tin thuốc -->
                        
-                          <form class="row g-3" th:action="@{/thuocs/saveOrUpdate}" method="post" th:object="${thuoc}">
-                            <div class="col-md-8">
+                          <form class="row g-3" th:action="@{/admin/thuocs/saveOrUpdate}" method="post" th:object="${thuoc}">
+                            <div class="col-md-3">
                               <label for="idThuoc" class="form-label">Mã thuốc</label>
                                <input type="hidden" th:field="*{isEdit}">
                               <input type="text" class="form-control" th:field="*{idThuoc}" placeholder="Mã thuốc">
                             </div>
-                            <div class="col-md-4">
+                            <div class="col-md-5">
                               <label for="nameThuoc" class="form-label">Tên thuốc</label>                   
                               <input type="text" class="form-control" th:field="*{nameThuoc}">
                             </div>                   
-                            <div class="col-md-8">
+                            <div class="col-md-4">
                               <label for="loaiThuoc" class="form-label">Loại thuốc</label>
                               <input type="text" class="form-control" th:field="*{loaiThuoc}" >
                             </div>
-                            <div class="col-md-4">
-                              <label for="donvi" class="form-label">Đơn vị</label>
-                              <input type="text" class="form-control" th:field="*{donvi}" >
+                            <div class="col-md-3">
+                              <label for="loaiThuoc" class="form-label">Dạng thuốc</label>
+                              <input type="text" class="form-control" th:field="*{dangThuoc}" placeholder="viên,ống,..." >
                             </div>
-                            <div class="col-md-4">
+                            <div class="col-md-3">
+                              <label for="loaiThuoc" class="form-label">Phương thức đóng gói</label>
+                              <input type="text" class="form-control" th:field="*{dongGoi}" placeholder="50 viên/hộp,...">
+                            </div>
+                            <div class="col-md-3">
+                              <label for="loaiThuoc" class="form-label">Phương thức dùng</label>
+                              <input type="text" class="form-control" th:field="*{phuongThuc}" placeholder="uống,..">
+                            </div>
+                            <div class="col-md-3">
+                              <label for="loaiThuoc" class="form-label">Thuốc Ngoại</label>
+                             <select th:field="*{thuocNgoai}" class="form-select"
+										aria-describedby="inputGioitinh" required>
+										<option value="0">Thuốc Ngoại</option>
+										<option value="1">Thuốc Nội</option>
+										
+									</select>
+                            </div>
+                            
+                            <div class="col-md-3">
+                              <label for="donvi" class="form-label">Đơn vị</label>
+                              <input type="text" class="form-control" th:field="*{donvi}" placeholder="viên,gram,lọ">
+                            </div>
+                            <div class="col-md-3">
                               <label for="soluong" class="form-label">SL tồn kho</label>
                               <input type="number" class="form-control" th:field="*{soluong}">
                             </div>
-                            <div class="col-md-4">
+                            <div class="col-md-3">
                               <label for="dongia" class="form-label">Đơn giá</label>
                               <input type="number" class="form-control"  th:field="*{dongia}">
                             </div>

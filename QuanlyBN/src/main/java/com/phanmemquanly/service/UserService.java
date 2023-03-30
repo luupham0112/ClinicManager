@@ -35,4 +35,6 @@ public interface UserService {
 
 	List<User> findByUserNameContaining(String userName);
 
+	User login(String userName, String passWord);
+
 }

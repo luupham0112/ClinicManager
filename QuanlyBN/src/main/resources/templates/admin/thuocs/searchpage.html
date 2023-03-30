@@ -14,7 +14,7 @@
         <div class="pagetitle">
             <h1>Kho thuốc</h1>
             <nav><ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="index.html">Trang chủ</a></li>
+                <li class="breadcrumb-item"><a a th:href="@{/admin/home}">Trang chủ</a></li>
                 <li class="breadcrumb-item">Thuốc</li>
                 <li class="breadcrumb-item active">Kho thuốc</li>
             </ol></nav>
@@ -26,18 +26,24 @@
                     <div class="card">
                       <div class="card-body">
                         <h5 class="card-title">Quản lý thuốc</h5>
+                        
+                        <div th:if="${message !=null}" class="alert alert-success alert-dismissible fade show" role="alert"><i class="bi bi-check-circle me-1"></i>
+						   <i>[[${message}]]</i>
+                           <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                       </div>
+                       
                         <div class="dataTable-wrapper dataTable-loading no-footer sortable searchable fixed-columns">
 
                             <div class="dataTable-top">                              
                                   <button type="button" class="btn btn-info" id="btn-nhapkho"></i>Nhập kho</button>   
                                   <button type="button" class="btn btn-info" id="btn-xuatkho">Xuất kho</button>
-                                  <a th:href="@{/thuocs/add}" class="btn btn-primary"  ><i class="bi bi-plus"></i> Thêm thuốc</a>
+                                  <a th:href="@{/admin/thuocs/add}" class="btn btn-primary"  ><i class="bi bi-plus"></i> Thêm thuốc</a>
                                  
                                 <div class="dataTable-search">
-                                <form th:action="@{/thuocs/searchpage}">
+                                <form th:action="@{/admin/thuocs/searchpage}">
                                      <label>Từ khóa:</label>
                                     <input class="dataTable-input" placeholder="Tìm kiếm thuốc" type="text" name="nameThuoc" id="nameThuoc">
-                                    <button type="button" class="btn btn-primary">Tìm</button>
+                                    <button type="submit" class="btn btn-primary">Tìm</button>
                                  </form>
                                 </div>
                             </div>
@@ -91,13 +97,40 @@
                                         <td>[[${thuoc.dongia}]]</td>
                                        
                                         <td class="end">
-                                          <a class="btn btn-dark" th:href="@{'/thuocs/edit/'+ ${thuoc.idThuoc}}" role="button"><i class="bi bi-pencil-square"></i></a>
+                                          <a class="btn btn-dark" th:href="@{'/admin/thuocs/edit/'+ ${thuoc.idThuoc}}" role="button"><i class="bi bi-pencil-square"></i></a>
                                                 
-                                          <a class="btn btn-danger" th:href="@{'/thuocs/delete/'+ ${thuoc.idThuoc}}" role="button"><i class="bi bi-x-lg"></i></a>
-
+                                         <a class="btn btn-danger" role="button"
+											    th:data-id="${thuoc.idThuoc}"
+											    th:data-name="${thuoc.nameThuoc}"
+											    onclick="showConfirmDialog(this.getAttribute('data-id'),this.getAttribute('data-name'))">
+											    <i class="bi bi-trash"></i>
+											    </a>
                                         </td>                                      
                                     </tr>
                               </table>
+                              <script>
+        function showConfirmDialog(id,name) {
+            $('#hotenBN').text(name);
+            $('#yes').attr('href', '/admin/thuocs/delete/' + id );
+            $('#confirmId').modal('show');
+        }
+
+     </script>
+     <div class="modal fade" id="confirmId" tabindex="-1" aria-hidden="true" role="dialog">
+                                   <div class="modal-dialog">
+                                       <div class="modal-content">
+                                            <div class="modal-header">
+                                                 <h5 class="modal-title">Cảnh báo</h5>
+                                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                             </div>
+                                             <div class="modal-body">Bạn có chắc chắn muốn xóa <span id="hotenBN"></span> ?</div>
+                                             <div class="modal-footer">
+                                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+                                                 <a id="yes" type="button" class="btn btn-danger">Xóa</a>
+                                             </div>
+                                        </div>
+                                    </div>
+                                </div>
                           </div>
                                
                             <div class="dataTable-bottom" style="position:sticky;bottom:0;background:#fff;z-index:50;">
@@ -151,73 +184,7 @@
     </main>
     </div>
     
-     <!-- Vendor JS Files -->
-  <script src="/assets/vendor/apexcharts/apexcharts.min.js"></script>
-  <script src="/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-  <script src="/assets/vendor/chart.js/chart.umd.js"></script>
-  <script src="/assets/vendor/echarts/echarts.min.js"></script>
-  <script src="/assets/vendor/quill/quill.min.js"></script>
-  <script src="/assets/vendor/simple-datatables/simple-datatables.js"></script>
-  <script src="/assets/vendor/tinymce/tinymce.min.js"></script>
-  <script src="/assets/vendor/php-email-form/validate.js"></script>
-  <script src="/assets/js/component.js"></script>
-
-  <!-- Template Main JS File -->
-  <script src="/assets/js/main.js"></script>
-
-  <!-- Boostrap JS File -->
-  <script src="/bootstrap/js/bootstrap.min.js"></script>
-  <script src="/bootstrap/js/bootstrap.bundle.min.js"></script>
-  <script src="/bootstrap/js/bootstrap.esm.min.js"></script>
-  <script>
-    var btnNhap = document.getElementById("btn-nhapkho");
-    var formThuoc=document.getElementById("phieuNhap");
-    var btnClose = document.getElementById("close-nhap");
-     
-    var btnXuat = document.getElementById("btn-xuatkho");
-    var formXuat=document.getElementById("phieuXuat");
-    var btnClose2 = document.getElementById("close-xuat");
-
-    var btnThem = document.getElementById("btn-themthuoc");
-    var formThem=document.getElementById("formThemthuoc");
-    var btnClose3 = document.getElementById("close-themthuoc");
-   
-    //hiển thị phiếu nhập
-    function showForm () { 
-      formThuoc.style.display="block";
-    }
-    btnNhap.addEventListener("click", showForm);
-    //đóng phiếu nhập
-    function hideForm1(){
-      formThuoc.style.display="none";
-    }
-    btnClose.addEventListener("click", hideForm1);
-   
-    //hiển thị phiếu xuất
-    function showForm2 () { 
-      formXuat.style.display="block";
-    }
-    btnXuat.addEventListener("click", showForm2);
-
-    //đóng phiếu xuất
-    function hideForm2(){
-      formXuat.style.display="none";
-    }
-    btnClose2.addEventListener("click", hideForm2);
-
-    //hiển thị formThem
-    function showForm3 () { 
-      formThem.style.display="block";
-    }
-    btnThem.addEventListener("click", showForm3);
-
-    //đóng phiếu xuất
-    function hideForm3(){
-      formThem.style.display="none";
-    }
-    btnClose3.addEventListener("click", hideForm3);
-   
-  </script>
+  
   
 </body>
 </html>

@@ -22,7 +22,43 @@ public class ThuocDto  implements Serializable {
 	private int soluong;
 	
 	private double dongia;
+	private String dangThuoc;
+	private String dongGoi;
+	private String phuongThuc;
+	private int thuocNgoai;
 	
+	public String getDangThuoc() {
+		return dangThuoc;
+	}
+
+	public void setDangThuoc(String dangThuoc) {
+		this.dangThuoc = dangThuoc;
+	}
+
+	public String getDongGoi() {
+		return dongGoi;
+	}
+
+	public void setDongGoi(String dongGoi) {
+		this.dongGoi = dongGoi;
+	}
+
+	public String getPhuongThuc() {
+		return phuongThuc;
+	}
+
+	public void setPhuongThuc(String phuongThuc) {
+		this.phuongThuc = phuongThuc;
+	}
+
+	public int getThuocNgoai() {
+		return thuocNgoai;
+	}
+
+	public void setThuocNgoai(int thuocNgoai) {
+		this.thuocNgoai = thuocNgoai;
+	}
+
 	private Boolean isEdit=false;
 	
 	public Boolean getIsEdit() {
@@ -31,10 +67,6 @@ public class ThuocDto  implements Serializable {
 
 	public void setIsEdit(Boolean isEdit) {
 		this.isEdit = isEdit;
-	}
-
-	public ThuocDto() {
-		
 	}
 
 

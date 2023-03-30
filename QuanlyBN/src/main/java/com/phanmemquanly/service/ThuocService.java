@@ -11,6 +11,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.repository.query.FluentQuery.FetchableFluentQuery;
 
 import com.phanmemquanly.domain.Thuoc;
+import com.phanmemquanly.model.ThuocDto;
 
 public interface ThuocService {
 
@@ -67,6 +68,10 @@ public interface ThuocService {
 	List<Thuoc> findByNameThuocContaining(String namThuoc);
 
 	Page<Thuoc> findByNameThuocContaining(String namThuoc, Pageable pageable);
+
+	Thuoc find(int id);
+
+	List<ThuocDto> getThuocs();
 
 	
 

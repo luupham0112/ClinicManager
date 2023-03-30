@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{admin/index.html}">
+<head>
+<title>Thông tin bệnh nhân</title>
+<meta content="" name="description">
+<meta content="" name="keywords">
+</head>
+<body>
+	<div layout:fragment="main">
+	                   <!-- ======= Main ======= -->
+    <main id="main" class="main">
+        <div class="pagetitle">
+            <h1>Chi tiết bệnh nhân</h1>
+            <nav>
+              <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a th:href="@{/admin/home}">Trang chủ</a></li>
+                <li class="breadcrumb-item">Bệnh nhân</li>
+                <li class="breadcrumb-item active">Chi tiết bệnh nhân</li>
+              </ol>
+            </nav>
+        </div><!-- End Page Title -->
+        <section class="section" >
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="card">
+                        <div class="card-body">
+                          <h5 class="card-title">Thông tin bệnh nhân</h5>   
+                          <!-- Multi Columns Form -->
+                        
+                           <form class="row g-3 needs-validation" novalidate
+							 method="post"
+								th:object="${patient}">
+								<div class="col-md-3">
+									<label for="inputIDPatient" class="form-label">Mã bệnh nhân</label>
+									<input type="hidden" th:field="*{isEdit}"> 
+									<input type="text" class="form-control " th:field="*{idBenhNhan}" >
+								</div>
+								<div class="col-md-3">
+									<label for="inputCCCD" class="form-label">Số CCCD/CMND</label>
+									<input type="text" class="form-control" th:field="*{CCCD}"
+										aria-describedby="inputCCCD" required>
+									<div th:if="${#fields.hasErrors('CCCD')}"  class="form-text validate-warning ">Vui lòng nhập số CCCD</div>
+								</div>
+
+								<div class="col-md-6">
+									<label for="inputNameBN" class="form-label">Họ và tên</label> <input
+										type="text" class="form-control" th:field="*{hotenBN}"
+										aria-describedby="inputNameBN" required>
+									<div th:if="${#fields.hasErrors('hotenBN')}"  class="form-text validate-warning ">Vui lòng nhập họ và tên</div>
+								</div>
+								<div class="col-md-3">
+									<label for="inputNgaysinh" class="form-label">Ngày sinh</label>
+									<input type="date" class="form-control" th:field="*{ngaysinh}"
+										aria-describedby="inputNgaysinh" required>
+									<div th:if="${#fields.hasErrors('ngaysinh')}"  class="form-text validate-warning ">Vui lòng chọn ngày sinh</div>
+								</div>
+								<div class="col-md-2">
+									<label for="inputGioitinh" class="form-label">Giới tính</label>
+									<select th:field="*{gioiTinh}" class="form-select"
+										aria-describedby="inputGioitinh" required>
+										<option value="0">Nam</option>
+										<option value="1">Nữ</option>
+										<option value="2">Khác</option>
+									</select>
+									<div th:if="${#fields.hasErrors('gioiTinh')}"  class="form-text validate-warning ">Vui lòng chọn giới tính</div>
+								</div>
+								<div class="col-md-1">
+									<label for="inputAge" class="form-label">Tuổi</label> <input
+										type="number" class="form-control" th:field="*{tuoi}"
+										aria-describedby="inputAge" required>
+									<div th:if="${#fields.hasErrors('tuoi')}"  class="form-text validate-warning ">Vui lòng nhập tuổi</div>
+								</div>
+								<div class="col-6">
+									<label for="inputAddress" class="form-label">Địa chỉ</label> <input
+										type="text" class="form-control" th:field="*{diaChi}"
+										aria-describedby="inputAddess" required>
+									<div th:if="${#fields.hasErrors('diaChi')}"  class="form-text validate-warning ">Vui lòng nhập địa chỉ</div>
+								</div>
+								<div class="col-3">
+									<label for="inputAddress" class="form-label">Nghề nghiệp</label> <input
+										type="text" class="form-control" th:field="*{ngheNghiep}"
+										aria-describedby="inputAddess" required>
+									<div th:if="${#fields.hasErrors('ngheNghiep')}"  class="form-text validate-warning ">Vui lòng nhập nghề nghiệp</div>
+								</div>
+								<div class="col-md-3">
+									<label for="inputDoituong" class="form-label">Quê quán</label>
+									<select name="queQuan" id="doituong" th:field="*{queQuan}" class="form-select"
+										aria-describedby="inputDoituong" required>
+										 <option value="TP. Hồ Chí Minh">TP. Hồ Chí Minh</option>
+                <option value="An Giang">An Giang</option>
+                <option value="Bà Rịa - Vũng Tàu">Bà Rịa - Vũng Tàu</option>
+                <option value="Bắc Giang">Bắc Giang</option>
+                <option value="Bắc Kạn">Bắc Kạn</option>
+                <option value="Bạc Liêu">Bạc Liêu</option>
+                <option value="Bắc Ninh">Bắc Ninh</option>
+                <option value="Bến Tre">Bến Tre</option>
+                <option value="Bình Định">Bình Định</option>
+                <option value="Bình Dương">Bình Dương</option>
+                <option value="Bình Phước">Bình Phước</option>
+                <option value="Bình Thuận">Bình Thuận</option>
+                <option value="Cà Mau">Cà Mau</option>
+                <option value="Cần Thơ">Cần Thơ</option>
+                <option value="Cao Bằng">Cao Bằng</option>
+                <option value="Đà Nẵng">Đà Nẵng</option>
+                <option value="Đắk Lắk">Đắk Lắk</option>
+                <option value="Đắk Nông">Đắk Nông</option>
+                <option value="Điện Biên">Điện Biên</option>
+                <option value="Đồng Nai">Đồng Nai</option>
+                <option value="Đồng Tháp">Đồng Tháp</option>
+                <option value="Gia Lai">Gia Lai</option>
+                <option value="Hà Giang">Hà Giang</option>
+                <option value="Hà Nam">Hà Nam</option>
+                <option value="Hà Nội">Hà Nội</option>
+                <option value="Hà Tĩnh">Hà Tĩnh</option>
+                <option value="Hải Dương">Hải Dương</option>
+                <option value="Hải Phòng">Hải Phòng</option>
+                <option value="Hậu Giang">Hậu Giang</option>
+                <option value="Hòa Bình">Hòa Bình</option>
+                <option value="Hưng Yên">Hưng Yên</option>
+                <option value="Khánh Hòa">Khánh Hòa</option>
+                <option value="Kiên Giang">Kiên Giang</option>
+                <option value="Kon Tum">Kon Tum</option>
+                <option value="Lai Châu">Lai Châu</option>
+                <option value="Lâm Đồng">Lâm Đồng</option>
+                <option value="Lạng Sơn">Lạng Sơn</option>
+                <option value="Lào Cai">Lào Cai</option>
+                <option value="Long An">Long An</option>
+                <option value="Nam Định">Nam Định</option>
+                <option value="Nghệ An">Nghệ An</option>
+                <option value="Ninh Bình">Ninh Bình</option>
+                <option value="Ninh Thuận">Ninh Thuận</option>
+                <option value="Phú Thọ">Phú Thọ</option>
+                <option value="Phú Yên">Phú Yên</option>
+                <option value="Quảng Bình">Quảng Bình</option>
+                <option value="Quảng Nam">Quảng Nam</option>
+                <option value="Quảng Ngãi">Quảng Ngãi</option>
+                <option value="Quảng Ninh">Quảng Ninh</option>
+                <option value="Quảng Trị">Quảng Trị</option>
+                <option value="Sóc Trăng">Sóc Trăng</option>
+                <option value="Sơn La">Sơn La</option>
+                <option value="Tây Ninh">Tây Ninh</option>
+                <option value="Thái Bình">Thái Bình</option>
+                <option value="Thái Nguyên">Thái Nguyên</option>
+                <option value="Thanh Hóa">Thanh Hóa</option>
+                <option value="Thừa Thiên Huế">Thừa Thiên Huế</option>
+                <option value="Tiền Giang">Tiền Giang</option>
+                <option value="Trà Vinh">Trà Vinh</option>
+                <option value="Tuyên Quang">Tuyên Quang</option>
+                <option value="Vĩnh Long">Vĩnh Long</option>
+                <option value="Vĩnh Phúc">Vĩnh Phúc</option>
+                <option value="Yên Bái">Yên Bái</option>
+									</select>
+									<div th:if="${#fields.hasErrors('queQuan')}"  class="form-text validate-warning ">Vui lòng chọn quê quán</div>
+								</div>
+								
+								
+								<div class="text-center">
+										 <a class="btn btn-danger" th:href="@{/admin/patients/list}"role="button">Danh sách bệnh nhân</a>	
+								</div>
+							</form>
+            
+                        </div>
+                      </div>
+          
+          
+                  </div>
+                  <div class="col-lg-6">
+                    <div class="card">
+                        <div class="card-body">
+                          <h5 class="card-title">Danh sách hồ sơ bệnh án</h5>   
+                          <!-- Multi Columns Form -->
+                          <table class="table">
+                            <thead>
+                              <tr >
+                                <th scope="col">Mã khám bệnh</th>
+                                <th scope="col">Ngày khám</th>                               
+                                <th scope="col">Chi tiết</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr  th:each=" khambenh : ${khambenhs}">            
+                                <td scope="row" th:text="${khambenh.idKhamBenh}"></td>
+                                <td th:text="${khambenh.ngayKB}"></td>                                                            
+                                <td><a class="btn btn-info" th:href="${'/admin/khambenhs/benhan/' + khambenh.idKhamBenh}" role="button">
+                                <i class="bi bi-info-circle"></i></a></td>                  
+                              </tr>
+
+                            </tbody>
+                          </table>
+                        
+                        </div>
+                      </div>
+          
+          
+                  </div> 
+                  <div class="col-lg-6">
+                    <div class="card">
+                        <div class="card-body">
+                          <h5 class="card-title">Danh sách đơn thuốc</h5>   
+                          <!-- Multi Columns Form -->
+                          <table class="table">
+                            <thead>
+                              <tr>
+                                <th scope="col">Mã đơn thuốc</th>
+                                <th scope="col">Ngày khám</th>
+                                <th scope="col"> Chi tiết</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr  th:each=" donthuoc : ${donthuocs}" >
+                                <th scope="row"th:text="${donthuoc.idDonthuoc}"></th>
+                                <td th:text="${donthuoc.ngayTao}"></td>
+                                <td>
+                                 <td>
+                                 <a class="btn btn-info" th:href="${'/admin/donthuoc/toathuoc/' + donthuoc.idDonthuoc}" role="button">
+                                <i class="bi bi-info-circle"></i></a>
+                                </td>
+                               
+                                </td>
+                                
+                              </tr>
+
+                            </tbody>
+                          </table>
+                        
+                        </div>
+                      </div>
+          
+          
+                  </div> 
+                   <div class="col-lg-6">
+                    <div class="card">
+                        <div class="card-body">
+                          <h5 class="card-title">Danh sách xét nghiệm</h5>   
+                          <!-- Multi Columns Form -->
+                          <table class="table">
+                            <thead>
+                              <tr >
+                                <th scope="col">Mã khám bệnh</th>
+                                <th scope="col">Ngày khám</th>                               
+                                <th scope="col">Chi tiết</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr  th:each=" khambenh : ${khambenhs}">            
+                                <td scope="row" th:text="${khambenh.idKhamBenh}"></td>
+                                <td th:text="${khambenh.ngayKB}"></td>                                                            
+                                <td> <a class="btn btn-info" th:href="${'/admin/khambenhs/xetnghiem/' + khambenh.idKhamBenh}" role="button">
+                                <i class="bi bi-info-circle"></i></a></td>                  
+                              </tr>
+
+                            </tbody>
+                          </table>
+                        
+                        </div>
+                      </div>
+          
+          
+                  </div> 
+                  
+
+
+                   
+            </div>
+
+      </section>
+       
+
+    </main><!-- End Main-->
+
+	</div>
+
+
+</body>
+</html>

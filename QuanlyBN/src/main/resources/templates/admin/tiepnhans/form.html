@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{admin/index.html}">
+<head>
+<title>Tiếp nhận bệnh nhân</title>
+<meta content="" name="description">
+<meta content="" name="keywords">
+<style type="text/css">
+@media print {
+ body * {
+    display:none;
+ }
+ #phieuSTT, #phieuSTT * {
+ display:block;
+ text-align:center;
+ }
+ 
+ }
+</style>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script>
+	$(document).on('change', '#name', function() {
+		var selectedOptionIndex = $(this).find('option:selected').index();
+
+		$('#money option').eq(selectedOptionIndex).prop('selected', true);
+	});
+
+	
+</script>
+</head>
+<body>
+	<div layout:fragment="main">
+	     <main id="main" class="main">
+                <div class="pagetitle">
+                    <h1>Tiếp nhận bệnh nhân</h1>
+                    <nav>
+                      <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a th:href="@{/admin/trang-chu}">Trang chủ</a></li>
+                        <li class="breadcrumb-item">Bệnh nhân</li>
+                        <li class="breadcrumb-item">Tiếp nhận bệnh nhân</li>
+                       
+                      </ol>
+                    </nav>
+                  </div><!-- End Page Title -->
+                <section class="section" >
+                    <div class="row">
+                    
+                      <div class="col-lg-12">
+                        <div class="card">
+                          <div class="card-body">
+                            <h5 class="card-title">Thông tin bệnh nhân</h5>   
+                            <!-- Thông tin bệnh nhân -->
+                             
+                            <form  method="post"
+								th:object="${patient}">
+                              <div class="row mb-2">
+                                <label for="inputEmail3" class="col-sm-1 col-form-label">Mã bệnh nhân:</label>
+                                <div class="col-sm-2">
+                                  <input type="text" readonly class="form-control" th:field="*{idBenhNhan}">
+                                </div>
+                                <label for="inputEmail3" class="col-sm-1 col-form-label">Số CCCD:</label>
+                                <div class="col-sm-3">
+                                  <input type="text" readonly class="form-control-plaintext" th:field="*{CCCD}">
+                                </div>
+                                <label for="inputEmail3" class="col-sm-1 col-form-label">Họ và tên:</label>
+                                <div class="col-sm-2">
+                                  <input type="text" readonly class="form-control-plaintext" th:field="*{hotenBN}">
+                                </div>                             
+                              </div>
+                              <div class="row mb-2">
+                                
+                                <label for="inputEmail3" class="col-sm-1 col-form-label">Ngày sinh:</label>
+                                <div class="col-sm-2">
+                                  <input type="text" readonly class="form-control-plaintext" th:field="*{ngaysinh}">                       
+                                </div>
+                                <label for="inputEmail3" class="col-sm-1 col-form-label">Địa chỉ:</label>
+                                <div class="col-sm-3">
+                                  <input type="text" readonly class="form-control-plaintext" th:field="*{diaChi}">
+                                </div>
+                                <label for="inputEmail3" class="col-sm-1 col-form-label">Tuổi:</label>
+                                <div class="col-sm-1">
+                                  <input type="text" readonly class="form-control-plaintext" th:field="*{tuoi}">
+                                </div>
+                                <label for="inputEmail3" class="col-sm-1 col-form-label">Giới tính:</label>
+                                <div class="col-sm-1">
+                                  <input th:if="${patient.gioiTinh==0}" type="text" readonly class="form-control-plaintext" value="Nam">
+                                  <input th:if="${patient.gioiTinh==1}" type="text" readonly class="form-control-plaintext" value="Nữ">
+                                  <input th:if="${patient.gioiTinh==2}" type="text" readonly class="form-control-plaintext" value="Khác">
+                                </div>
+                                 
+                              </div>
+                                                                        
+                              <div class="text-center">
+                              <a class="btn btn-primary" th:href="@{/admin/patients/list}" role="button">Tìm bệnh nhân</a> 
+                                <a class="btn btn-success" th:href="@{/admin/patients/add}" role="button">Thêm mới bệnh nhân</a>
+                                   
+                              </div>
+                             
+                            </form>   <!-- End Thông tin bệnh nhân-->
+              
+                          </div>
+                        </div>
+                      </div>  
+                               
+                      <div class="col-lg-8">
+                        <div class="card">
+                            <div class="card-body">
+                              <h5 class="card-title">Thông tin tiếp nhận</h5>   
+                         
+                              <form class="row g-3" th:action="@{/admin/tiepnhans/saveOrUpdate}" method="post"
+								th:object="${tiepnhan}">
+                                <div class="col-md-2">
+                                  <label for="inputName" class="form-label">Số tiếp nhận</label>
+                                  <input type="text" class="form-control" th:field="*{idTiepNhan}">
+                                </div>
+                             
+                             
+                                <div class="col-md-3">
+                                    <label for="inputState" class="form-label">Đối tượng khám bệnh</label>
+                                    <select id="inputState" class="form-select" th:field="*{doituongKB}">
+                                      <option value="0">Thường</option>
+                                      <option value="1">BHYT 50%</option>
+                                      <option value="2">BHYT 80%</option>
+                                      <option value="3">BHYT 100%</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-4">
+                                  <label for="inputName" class="form-label">Số thẻ BHYT</label>
+                                  <input type="text" class="form-control" th:field="*{soBHYT}">
+                                </div>
+                                <div class="col-md-2">
+                                  <label for="inputName" class="form-label">Đơn vị</label>
+                                  <input type="text" class="form-control" th:field="*{donVi}">
+                                </div>
+                                <div class="col-md-3">
+                                  <label for="inputCity" class="form-label">Từ ngày</label>
+                                  <input type="date" class="form-control" th:field="*{startDate}">
+                                </div>
+                                <div class="col-md-3">
+                                  <label for="inputCity" class="form-label">Đến ngày</label>
+                                  <input type="date" class="form-control" th:field="*{endDate}">
+                                </div>
+                                <div class="col-md-4">
+                                    <label for="inputCity" class="form-label">Khám điều trị</label>
+                                    <select class="form-select" th:field="*{idService}" id="name">
+                                        <option th:each="item:${services}"
+                                         th:value="${item.idService}" th:text="${item.nameService}" th:selected="${item.idService==tiepnhan.idService}">1</option>                               
+                                      </select>
+                                </div>
+                                
+                              <div class="col-md-3">
+                                    <label for="inputCity" class="form-label">Giá tiền</label>
+                                    <select class="form-select" id="money">
+                                        <option th:each="item:${services}"
+                                         th:value="${item.idService}" th:text="${item.money}" ></option>                               
+                                      </select>
+                                </div>
+                                 <div class="col-md-4">
+                                  <label for="inputCity" class="form-label">Phòng khám</label>
+                                  <input type="number" class="form-control" th:field="*{endDate}">
+                              </div>
+                              
+                             
+                              <div class="col-md-3">
+                                    <label for="inputCity" class="form-label">Mã bệnh nhân</label>
+                                    <select class="form-select" th:field="*{idBenhNhan}">
+                                        <option th:each="item:${patients}"
+                                         th:value="${item.idBenhNhan}" th:text="${item.idBenhNhan}" th:selected="${item.idBenhNhan==tiepnhan.idBenhNhan}">1</option>                               
+                                      </select>
+                                </div>
+                               
+                                 
+                                  <div class="text-center" style="padding-bottom: 20px;">
+                                    <button type="submit" class="btn btn-success">Lưu</button>
+                                    <button type="reset" class="btn btn-secondary">Bỏ qua</button>
+                                  </div>
+                               
+                              </form>
+                            
+                
+                            </div>
+                          </div>
+              
+                      </div>
+                      
+                      <div class="col-lg-4" >
+                        <div class="card">
+                          <div class="card-body">
+                            <h5 class="card-title">In phiếu STT</h5>
+                           
+                            <div class="form-phieu" style="position: relative;">
+                              <!-- <div class="form-phieu-in">
+                                <div class="form-phieu-wrapper">
+                                  <div class="form-phieu_background"></div>
+                                  <div class="form-phieu_main"></div>
+                                </div> -->
+                                <script type="text/javascript">
+
+                                var clicks = 1;
+                                function hello() {
+                                    clicks += 1;
+                                    document.getElementById("stt").innerHTML = clicks;
+                                };
+                                function reset() {
+                                    clicks=1;
+                                    document.getElementById("stt").innerHTML = clicks;
+                                };
+                                </script>
+                                <div class="form-phieu-background"  style="width:100%;height:320px"></div>
+                                <div class="form-phieu_wrapper" id="phieuSTT">
+                                  <div class="form-header" style="padding-top:20px">
+                                    <h5 class="form-title text-center">PHIẾU KHÁM BỆNH</h5>
+                                  </div>
+                                  <div class="form_content">                 
+                                    <div class="form-bolder"></div>
+                                    <h5 class="text-center" style="padding-top:20px">STT</h5>
+                                    <h4 class="text-center"></h4>
+                                      <h2 class="sokham text-center" id="stt"></h4>
+                                    </div>
+                                    <p class="text-center" style="padding:0 15px">Quý khách vui lòng chờ, số phiếu của quý khách sẽ được gọi khi đến lượt.</p>
+                                   
+                                  </div> 
+                                      
+                                </div> 
+                                
+
+                              <div class="btn-in text-center" style="margin-top: 15px;">
+                                <button type="submit" class="btn btn-primary " onclick="hello()"><i class="bi bi-printer"></i> In phiếu</button>
+                                 <button class="btn btn-dark "  onclick="reset()"><i class="bi bi-x"></i> Reset</button>
+                              </div>
+                              
+                            </div>
+                          </div>
+                      </div>
+                    </div>
+                   
+                  
+                </section>
+                  
+
+               </main><!-- End Main-->
+
+		
+	</div>
+
+
+</body>
+</html>

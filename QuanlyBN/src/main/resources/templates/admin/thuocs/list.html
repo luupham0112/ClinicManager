@@ -313,9 +313,9 @@
                                         <td>[[${thuoc.dongia}]]</td>
                                        
                                         <td class="end">
-                                          <a class="btn btn-dark" th:href="@{'/thuocs/edit/'+ ${thuoc.idThuoc}}" role="button"><i class="bi bi-pencil-square"></i></a>
-                                                
-                                          <a class="btn btn-danger" th:href="@{'/thuocs/delete/'+ ${thuoc.idThuoc}}" role="button"><i class="bi bi-x-lg"></i></a>
+                                          
+                                          <a class="btn btn-danger" th:href="@{'/admin/donthuoc/add/'+ ${thuoc.idThuoc}}" role="button"><i class="bi bi-x-lg"></i></a>
+                                           <a class="btn btn-danger" th:href="${'/admin/donthuoc/add/'+ thuoc.idThuoc}" role="button"><i class="bi bi-x-lg"></i></a>
 
                                         </td>                                      
                                     </tr>

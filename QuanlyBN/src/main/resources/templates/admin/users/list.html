@@ -28,16 +28,13 @@
                                 <h5 class="card-title">Danh sách tài khoản</h5>
                                 <div class="dataTable-wrapper dataTable-loading no-footer sortable searchable fixed-columns">
                                     <div class="dataTable-top">                          
-                                        <div class="dataTable-search">
-                                         <laber>Từ khóa:</laber>
-                                          <input class="dataTable-input" placeholder="Tìm tài khoản" type="text">                                         
-                                        </div>                                            
+                                                                                 
                                     </div>
                                         <div class="dataTable-container table-responsive">
                                             <table class="table datatable dataTable-table table-bordered">
                                                 <thead>
                                                     <tr class="table-light">
-                                                        <th class="end" style="min-width:200px;width:200px;">
+                                                        <th class="first" style="min-width:200px;width:200px;">
                                                            <a href="#" class="dataTable-sorter">Họ và tên </a>
                                                         </th>
                                                         <th scope="col" data-sortable="" style="min-width:150px;width: 150px;">
@@ -51,11 +48,9 @@
                                                         <th scope="col" data-sortable="" style="min-width:250px;width: 250px;">
                                                             <a href="#" class="dataTable-sorter">Mật khẩu</a>
                                                         </th>
-                                                       
+                                                       <th class="end" scope="col" data-sortable="" style="min-width:250px;width: 250px;">
                                                         </th>
-                                                        <th scope="col" data-sortable="" style="min-width:200px;width:200px;">
-                                                            <a href="#" class="dataTable-sorter"></a>
-                                                       </th>
+                                                        
                                                       
                                                     </tr>
                                                 </thead>
@@ -66,16 +61,45 @@
                                                       <td>[[${user.userName}]]</td>
                                                       <td>[[${user.passWord}]]</td>
                                                       
-                                                     
+                                                    
                                                       <td class="end">
-											<a class="btn btn-info" th:href="@{'/users/view/' + ${user.userName}}"role="button"><i class="bi bi-info-circle"></i></a> 
-											<a class="btn btn-dark" th:href="@{'/users/edit/' + ${user.userName}}"  role="button"><i class="bi bi-pencil-square"></i></a> 
-											<a class="btn btn-danger" th:href="@{'/users/delete/' + ${user.userName}}" role="button"><i class="bi bi-x-lg"></i></a>
-											 </td>                                      
+										
+											<a class="btn btn-dark" th:href="@{'/admin//users/edit/' + ${user.userName}}"  role="button"><i class="bi bi-pencil-square"></i></a> 
+											<a class="btn btn-danger" role="button"
+											    th:data-id="${user.userName}"
+											    th:data-name="${user.userName}"
+											    onclick="showConfirmDialog(this.getAttribute('data-id'),this.getAttribute('data-name'))">
+											    <i class="bi bi-trash"></i>
+											    </a>
+											 </td>                                        
                                                   </tr>
                                                                       
                                                 </tbody>
                                             </table>
+                                            
+                                            <script>
+        function showConfirmDialog(id,name) {
+            $('#hotenBN').text(name);
+            $('#yes').attr('href', '/admin/users/delete/' + id );
+            $('#confirmId').modal('show');
+        }
+
+     </script>
+     <div class="modal fade" id="confirmId" tabindex="-1" aria-hidden="true" role="dialog">
+                                   <div class="modal-dialog">
+                                       <div class="modal-content">
+                                            <div class="modal-header">
+                                                 <h5 class="modal-title">Cảnh báo</h5>
+                                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                             </div>
+                                             <div class="modal-body">Bạn có chắc chắn muốn xóa<span id="hotenBN"></span> ?</div>
+                                             <div class="modal-footer">
+                                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+                                                 <a id="yes" type="button" class="btn btn-danger">Xóa</a>
+                                             </div>
+                                        </div>
+                                    </div>
+                                </div>
                                         </div> 
                                        
                                     </div>

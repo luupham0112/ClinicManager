@@ -1,9 +1,11 @@
 package com.phanmemquanly.service.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Function;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -11,9 +13,12 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.repository.query.FluentQuery.FetchableFluentQuery;
 import org.springframework.stereotype.Service;
 
+import com.phanmemquanly.dao.PatientDao;
 import com.phanmemquanly.domain.Patient;
+import com.phanmemquanly.model.PatientDto;
 import com.phanmemquanly.repository.PatientRepository;
 import com.phanmemquanly.service.PatientService;
+import com.phanmemquanly.service.mapper.PatientMapper;
 
 @Service
 public class PatientServiceImpl implements PatientService {
@@ -62,6 +67,7 @@ public class PatientServiceImpl implements PatientService {
 	public List<Patient> findAllById(Iterable<Integer> ids) {
 		return patientRepository.findAllById(ids);
 	}
+	
 
 	@Override
 	public Optional<Patient> findById(Integer id) {
@@ -133,6 +139,24 @@ public class PatientServiceImpl implements PatientService {
 		patientRepository.deleteAll();
 	}
 	
+	// don thuoc
+	@Autowired
+	private PatientDao PatientDAO;
+	
+	@Autowired
+	private PatientMapper patientMapper;
+
+	@Override
+	public List<PatientDto> getPatient() {
+
+		List<Patient> patients = PatientDAO.getPatients();
+
+		List<PatientDto> patientDTOList = new ArrayList<PatientDto>();
+		for (Patient c : patients) {
+			patientDTOList.add(patientMapper.mapToDTO(c));
+		}
+		return patientDTOList;
+	}
 	
 	
 

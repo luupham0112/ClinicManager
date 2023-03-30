@@ -21,7 +21,7 @@ public class User implements Serializable {
 	@Id
 	@Column(length= 30)
 	private String userName;
-	@Column(length= 20, nullable=false)
+	@Column(length= 100, nullable=false)
 	private String passWord;
 	@Column(columnDefinition = "nvarchar(100)")
 	private String hotenTk;
@@ -31,6 +31,8 @@ public class User implements Serializable {
 	private String email;
 	@Column(columnDefinition = "nvarchar(50)")
 	private String anhTk;
+	@Column(nullable=false)
+	private int term;
 	public String getUserName() {
 		return userName;
 	}
@@ -67,6 +69,14 @@ public class User implements Serializable {
 	public void setAnhTk(String anhTk) {
 		this.anhTk = anhTk;
 	}
+	public int getTerm() {
+		return term;
+	}
+	public void setTerm(int term) {
+		this.term = term;
+	}
+	
+	
 	
 	
 }

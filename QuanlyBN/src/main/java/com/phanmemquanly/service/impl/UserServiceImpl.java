@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.phanmemquanly.domain.User;
@@ -18,6 +19,21 @@ public class UserServiceImpl implements UserService{
 	@Autowired
    private UserRepository userRepository;
 
+	@Autowired
+	private BCryptPasswordEncoder bCryptPasswordEncoder;
+	// kiem tra dang nhap
+	@Override
+	public User login(String userName, String passWord) {
+		Optional<User> optExist = findById(userName);
+		
+		if(optExist.isPresent() && bCryptPasswordEncoder.matches(passWord, optExist.get().getPassWord())) {
+			optExist.get().setPassWord("");
+			return optExist.get();
+		}
+		 return null;
+	}
+	
+	
 	public UserServiceImpl(UserRepository userRepository) {
 		this.userRepository = userRepository;
 	}
@@ -29,6 +45,7 @@ public class UserServiceImpl implements UserService{
 
 	@Override
 	public <S extends User> S save(S entity) {
+		entity.setPassWord(bCryptPasswordEncoder.encode(entity.getPassWord()));
 		return userRepository.save(entity);
 	}
 

@@ -11,31 +11,46 @@
                 <ul class="sidebar-nav" id="sidebar-nav">
             
                     <li class="nav-item">
-                    <a class="nav-link " href="index.html">
+                    <a class="nav-link " th:href="@{/admin/home}">
                       <i class="bi bi-grid"></i>
                       <span>Thống kê</span>
                     </a>
                      </li><!-- End Thong ke Nav -->
+                     
+                     <li class="nav-item">
+                    <a class="nav-link collapsed" data-bs-target="#tables-nav" data-bs-toggle="collapse" href="#">
+                        <i class="ri-nurse-line"></i><span>Tiếp nhận </span><i class="bi bi-chevron-down ms-auto"></i>
+                    </a>
+                    <ul id="tables-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+                      <li>
+                          <a th:href="@{/admin/tiepnhans}">
+                            <i class="bi bi-circle"></i><span>Tiếp nhận bệnh nhân</span>
+                          </a>
+                        </li>
+                         <li>
+                          <a th:href="@{/admin/tiepnhans/list}">
+                            <i class="bi bi-circle"></i><span>Danh sách bệnh nhân đang chờ</span>
+                          </a>
+                        </li>
+                    </ul>
+                  </li><!-- End Bac si Nav -->
                      <li class="nav-item">
                       <a class="nav-link collapsed" data-bs-target="#charts-nav" data-bs-toggle="collapse" href="#" aria-expanded="false">
                         <i class="bi bi-clipboard2-pulse"></i><span>Khám bệnh</span><i class="bi bi-chevron-down ms-auto"></i>
                       </a>
-                      <ul id="charts-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+                      <ul id="charts-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">         
+                       
                         <li>
-                          <a href="forms-tiepnhan.html">
-                            <i class="bi bi-circle"></i><span>Tiếp nhận bệnh nhân</span>
-                          </a>
-                        </li>
-                        <li>
-                          <a href="table-dscho.html">
-                            <i class="bi bi-circle"></i><span>Danh sách bệnh nhân đang chờ</span>
-                          </a>
-                        </li>
-                        <li>
-                          <a href="khambenh.html">
+                          <a th:href="@{/admin/khambenhs}">
                             <i class="bi bi-circle"></i><span>Khám bệnh</span>
                           </a>
                         </li>
+                        <li>
+                          <a th:href="@{/admin/donthuoc}">
+                            <i class="bi bi-circle"></i><span>Tạo đơn thuốc</span>
+                          </a>
+                        </li>
+                        
                        
                       </ul>
                     </li><!-- End Khám bệnh Nav -->
@@ -46,36 +61,19 @@
                     </a>
                     <ul id="forms-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
                         <li>
-                            <a href="tables-data.html">
+                            <a th:href="@{/admin/patients/list}">
                               <i class="bi bi-circle"></i><span>Danh sách bệnh nhân</span>
                             </a>
                         </li>
                         <li>
-                          <a href="form-bn.html">
+                          <a th:href="@{/admin/patients/add}">
                             <i class="bi bi-circle"></i><span>Thông tin bệnh nhân</span>
                           </a>
                       </li>
-                      <li>
-                        <a href="form-bn.html">
-                          <i class="bi bi-circle"></i><span>Chi tiết bệnh nhân </span>
-                        </a>
-                     </li>
+                      
                         
                     </ul>
-                  </li><!-- End Benh nhan Nav -->
-            
-                  <li class="nav-item">
-                    <a class="nav-link collapsed" data-bs-target="#tables-nav" data-bs-toggle="collapse" href="#">
-                        <i class="ri-nurse-line"></i><span>Nhân viên</span><i class="bi bi-chevron-down ms-auto"></i>
-                    </a>
-                    <ul id="tables-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-                      <li>
-                        <a href="tables-bs.html">
-                          <i class="bi bi-circle"></i><span>Danh sách nhân viên</span>
-                        </a>
-                      </li>
-                    </ul>
-                  </li><!-- End Bac si Nav -->
+                  </li><!-- End Benh nhan Nav -->             
             
                   <li class="nav-item">
                     <a class="nav-link collapsed" data-bs-target="#components-nav" data-bs-toggle="collapse" href="#">
@@ -83,33 +81,32 @@
                     </a>
                     <ul id="components-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
                       <li>
-                        <a th:href="@{/thuocs/add}">
+                        <a th:href="@{/admin/thuocs/add}">
                           <i class="bi bi-circle"></i><span>Thêm thuốc</span>
                         </a>   
                       </li>
                       <li>
-                        <a th:href="@{/thuocs/searchpage}">
+                        <a th:href="@{/admin/thuocs/searchpage}">
                           <i class="bi bi-circle"></i><span>Kho thuốc</span>
                         </a>   
                       </li>
                       
-                      <li>
-                        <a href="table-nhapxuat.html">
-                          <i class="bi bi-circle"></i><span>Quản lý nhập/xuất kho</span>
-                        </a>   
-                      </li>
-                      <li>
-                        <a href="table-nhapxuat.html">
-                          <i class="bi bi-circle"></i><span>Nhập kho</span>
-                        </a>   
-                      </li>
-                      <li>
-                        <a href="table-nhapxuat.html">
-                          <i class="bi bi-circle"></i><span>Xuất kho</span>
-                        </a>   
-                      </li>
+                     
                     </ul>
                   </li><!-- End Components Nav -->
+                  
+                   <li class="nav-item">
+                    <a class="nav-link collapsed" th:href="@{/admin/khambenhs/list}">
+                      <i class="bi bi-file-medical"></i>
+                      <span>Bệnh án</span>
+                    </a>
+                     </li><!-- End Thong ke Nav -->
+                     <li class="nav-item">
+                    <a class="nav-link collapsed" th:href="@{/admin/donthuoc/lists}">
+                      <i class="bi bi-file-medical"></i>
+                      <span>Đơn thuốc</span>
+                    </a>
+                     </li><!-- End Thong ke Nav -->
                   
                   <li class="nav-heading">Trang</li>
                   <li class="nav-item">
@@ -117,13 +114,9 @@
                       <i class="bi bi-person"></i><span>Tài khoản</span><i class="bi bi-chevron-down ms-auto"></i>
                     </a>
                     <ul id="icons-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+                      
                       <li>
-                        <a href="taikhoan.html">
-                          <i class="bi bi-circle"></i><span>Thông tin tài khoản</span>
-                        </a>
-                      </li>
-                      <li>
-                        <a href="table-taikhoan.html">
+                        <a th:href="@{/admin/users/list}">
                           <i class="bi bi-circle"></i><span>Danh sách tài khoản</span>
                         </a>
                       </li>
@@ -133,21 +126,21 @@
             
             
                   <li class="nav-item">
-                    <a class="nav-link collapsed" href="pages-contact.html">
-                      <i class="bi bi-envelope"></i>
-                      <span>Liên hệ</span>
+                    <a class="nav-link collapsed" th:href="@{/admin/service/list}">
+                     <i class="bi bi-gear"></i>
+                      <span>Dịch vụ</span>
                     </a>
                   </li><!-- End Contact Page Nav -->
             
                   <li class="nav-item">
-                    <a class="nav-link collapsed" href="pages-register.html">
+                    <a class="nav-link collapsed" th:href="@{register}">
                       <i class="bi bi-card-list"></i>
                       <span>Đăng ký</span>
                     </a>
                   </li><!-- End Register Page Nav -->
             
                   <li class="nav-item">
-                    <a class="nav-link collapsed" href="pages-login.html">
+                    <a class="nav-link collapsed" th:href="@{login}">
                       <i class="bi bi-box-arrow-in-right"></i>
                       <span>Đăng nhập</span>
                     </a>

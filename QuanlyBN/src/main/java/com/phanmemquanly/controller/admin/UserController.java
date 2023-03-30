@@ -11,6 +11,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
@@ -19,18 +20,19 @@ import com.phanmemquanly.domain.Thuoc;
 import com.phanmemquanly.domain.User;
 import com.phanmemquanly.model.ThuocDto;
 import com.phanmemquanly.model.UserDto;
+import com.phanmemquanly.service.ThuocService;
 import com.phanmemquanly.service.UserService;
 
 import jakarta.validation.Valid;
 
 @Controller
-@RequestMapping("users")
+@RequestMapping("admin/users")
 public class UserController {
 	@Autowired
 	UserService userService;
 	
 	// Them tai khoan
-	@GetMapping("add")
+	@GetMapping("register")
 	public String add(Model model) {
 		model.addAttribute("user",new UserDto());	
 		return "admin/users/register";	
@@ -50,7 +52,7 @@ public class UserController {
 				
 			userService.save(entity);
 			model.addAttribute("message", "Tai khoan da duoc luu");
-			return new ModelAndView( "redirect:/users/list",model);	
+			return new ModelAndView( "redirect:/admin/users/list",model);	
 		}
 		
 		// Trả về danh sách thuốc
@@ -60,7 +62,14 @@ public class UserController {
 			model.addAttribute("users",list);	
 			return "admin/users/list";	
 		}
-
+		
+		// Xoa du lieu
+		@GetMapping("delete/{username}")
+		public ModelAndView delete(ModelMap model, @PathVariable("username") String username) {
+			userService.deleteById(username);
+			return new ModelAndView("forward:/admin/users/list", model);
+		}
+		
 	
 	
 

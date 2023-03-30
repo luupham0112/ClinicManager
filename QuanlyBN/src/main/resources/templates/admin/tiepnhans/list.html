@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{admin/index.html}">
+<head>
+<title>Danh sách bệnh nhân đang chờ</title>
+<meta content="" name="description">
+<meta content="" name="keywords">
+</head>
+<body>
+	<div layout:fragment="main">
+	<!-- =========== Main ============== -->
+              <main id="main" class="main">
+                <div class="pagetitle">
+                    <h1>Danh sách bệnh nhân đang chờ</h1>
+                    <nav><ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a th:href="@{/admin/trang-chu}">Trang chủ</a></li>
+                        <li class="breadcrumb-item">Khám bệnh</li>
+                        <li class="breadcrumb-item active">Danh sách bệnh nhân đang chờ</li>
+                    </ol></nav>
+                </div>
+                <section class="section" >
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="card">
+                              <div class="card-body">
+                                <h5 class="card-title">Danh sách bệnh nhân đang chờ</h5>
+                                <div class="dataTable-wrapper dataTable-loading no-footer sortable searchable fixed-columns">
+        
+                                    <div class="dataTable-top">
+                                    <a class="btn btn-primary"th:href="@{/admin/tiepnhans}" role="button">
+									<i class="bi bi-arrow-up-right-square"></i> Tiếp nhận bệnh nhân</a>
+                                                                
+                                    </div>
+                                        <div class="dataTable-container table-responsive">
+                                            <table class="table datatable dataTable-table table-bordered">
+                                                <thead>
+                                                    <tr class="table-light">
+                                                    <th scope="col" data-sortable="" style="min-width:100px;width:100px;">
+                                                             <a href="#" class="dataTable-sorter">Số TN</a>
+                                                        </th>
+                                                        <th  style="min-width:150px;width:150px;">
+                                                           <a href="#" class="dataTable-sorter" alt="Số tiếp nhận">Mã bệnh nhân </a>              
+                                                        </th>
+                                                       
+                                                         
+                                                        <th scope="col" data-sortable="" style="min-width:200px;width:200px;">
+                                                            <a href="#" class="dataTable-sorter">Họ và tên</a>
+                                                        </th>
+                                                       
+                                                        <th scope="col" data-sortable="" style="min-width:150px;width: 150px;">
+                                                            <a href="#" class="dataTable-sorter">Ngày sinh</a>
+                                                        </th>
+                                                        <th scope="col" data-sortable="" style="min-width:120px;width: 120px;">
+                                                            <a href="#" class="dataTable-sorter">Giới tính</a>
+                                                        </th>
+                                                        <th scope="col" data-sortable="" style="min-width:120px;width: 120px;">
+                                                            <a href="#" class="dataTable-sorter">Trạng thái</a>
+                                                        </th>      
+                                                        <th  class="end" scope="col" data-sortable="" style="min-width:200px;width:200px;">
+                                                            <a href="#" class="dataTable-sorter"></a>
+                                                       </th>
+                                                      
+                                                    </tr>
+                                                </thead>
+                                                <tbody>                                
+                                                  <tr class="tb-white" th:if="${tiepnhan.trangThai==0}"  th:each=" tiepnhan: ${tiepnhans} " >
+                                                  <td  th:text="${tiepnhan.idTiepNhan}"></td>
+                                                      <td class="first"  scope="row" th:text="${tiepnhan.patient.idBenhNhan}"></td>
+                                                     
+                                                      <td th:text="${tiepnhan.patient.hotenBN}"></td>
+                                                      <td th:text="${tiepnhan.patient.ngaysinh}"></td>
+                                                      <td>
+                                                          <span th:if="${tiepnhan.patient.gioiTinh==0}">Nam</span>
+											              <span th:if="${tiepnhan.patient.gioiTinh==1}">Nữ</span>
+											              <span th:if="${tiepnhan.patient.gioiTinh==2}">Khác</span>
+                                                      </td>
+                                                      <td >
+                                                          <span th:if="${tiepnhan.trangThai==0}" style="color:blue">Đang chờ</span>
+                                                         
+                                                      </td>
+                                                      <td class="end">
+                                                        <a class="btn btn-warning" th:href="@{'/admin/khambenhs/' + ${tiepnhan.patient.idBenhNhan}}" role="button"><i class="bi bi-pencil-square"></i> Khám bệnh</a>
+                                                        <a class="btn btn-danger" role="button"
+											    th:data-id="${tiepnhan.idTiepNhan}"
+											    
+											    onclick="showConfirmDialog(this.getAttribute('data-id'))">
+											    <i class="bi bi-trash"></i>
+											    </a>
+                                                      </td>                                      
+                                                  </tr>
+                                                                      
+                                                </tbody>
+                                            </table>
+                                            	<script>
+        function showConfirmDialog(id) {
+         
+            $('#yes').attr('href', '/admin/tiepnhans/delete/' + id );
+            $('#confirmId').modal('show');
+        }
+
+     </script>
+								<div class="modal fade" id="confirmId" tabindex="-1" aria-hidden="true" role="dialog">
+                                   <div class="modal-dialog">
+                                       <div class="modal-content">
+                                            <div class="modal-header">
+                                                 <h5 class="modal-title">Cảnh báo</h5>
+                                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                             </div>
+                                             <div class="modal-body">Bạn có chắc chắn muốn xóa</div>
+                                             <div class="modal-footer">
+                                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+                                                 <a id="yes" type="button" class="btn btn-danger">Xóa</a>
+                                             </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                            
+                                        </div> 
+                                        <div class="dataTable-bottom" style="position:sticky;bottom:0;background:#fff;z-index:50;">
+                                    
+                                          <nav aria-label="Page navigation example " >
+                                            
+                                          </nav>
+                                        </div>
+                                    </div>
+                               
+                                  </div>
+        
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            
+            </main>
+
+		
+	</div>
+
+</body>
+</html>

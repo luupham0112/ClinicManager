@@ -5,6 +5,7 @@ import java.io.Serializable;
 import org.hibernate.validator.constraints.Length;
 
 import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -21,18 +22,29 @@ public class UserDto implements Serializable {
 	@NotEmpty
 	@Length(min=4)
 	private String passWord;
-	
+	@NotEmpty
 	private String hotenTk;
 	
 	private String sdt;
+	@NotEmpty
 	@Email
 	private String email;
 	
 	private String anhTk;
+	@Min(1)
+	private int term;
 
-	public UserDto() {
-		
+
+
+	public int getTerm() {
+		return term;
 	}
+
+
+	public void setTerm(int term) {
+		this.term = term;
+	}
+
 
 	public String getUserName() {
 		return userName;

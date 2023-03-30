@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{admin/index.html}">
+<head>
+<title>Hồ sơ bệnh án</title>
+<meta content="" name="description">
+<meta content="" name="keywords">
+
+<style type="text/css">
+#main #bodypage {
+	background: rgb(204, 204, 204);
+	font-family: Helvetica, Arial, Sans-Serif;
+	font-size: 16px;
+	line-height: 25px;
+}
+
+page {
+	background: white;
+	display: block;
+	margin: 0 auto;
+	margin-bottom: 0.5cm;
+	box-shadow: 0 0 0.5cm rgba(0, 0, 0, 0.5);
+}
+
+@page {
+	margin: 20mm 0 10mm 0;
+}
+
+page[size="A4"] {
+	width: 21cm;
+	/*height: 29.7cm; */
+	padding-bottom: 50px;
+}
+
+page[size="A4"][layout="portrait"] {
+	width: 29.7cm;
+	height: 21cm;
+}
+
+page[size="A3"] {
+	width: 29.7cm;
+	height: 42cm;
+}
+
+page[size="A3"][layout="portrait"] {
+	width: 42cm;
+	height: 29.7cm;
+}
+
+page[size="A5"] {
+	width: 14.8cm;
+	height: 20.5cm;
+	font-size: 14px;
+}
+
+page[size="A5"][layout="portrait"] {
+	width: 21cm;
+	height: 14.8cm;
+}
+
+@page {
+	margin-top: 30cm;
+	margin-bottom: 20cm;
+}
+
+@media print {
+	body * {
+		display: none;
+	}
+	page, page * {
+		display: block;
+	}
+	page {
+		margin-top: 50px !important;
+		box-shadow: 0;
+		background: #fff;
+		border: 0px;
+		box-shadow: 0 0 0cm rgba(0, 0, 0, 0);
+	}
+	.pagebreak {
+		page-break-after: always;
+	}
+	div {
+		page-break-inside: avoid;
+	}
+}
+
+.drug_list table {
+	/*border: 1px solid #dbd7c7;*/
+	border-collapse: collapse;
+	width: 100%;
+}
+
+.drug_list tr {
+	background: #ecf0f1;
+	border: none;
+}
+
+.drug_list tr:nth-of-type(odd) {
+	background: #fff;
+}
+
+.drug_list td {
+	padding: 5px 3px 5px 3px;
+	/*border-bottom: 1px solid #dbd7c7;*/
+}
+
+.drug_list td span {
+	color: brown;
+}
+
+.top-container {
+	padding-top: 0.4cm;
+	/*				padding-left: 0.4cm;
+            padding-right: 0.4cm;*/
+}
+
+.top-container .lleft {
+	text-align: left;
+	width: 15%;
+	float: left;
+	margin-right: 2%
+}
+
+.top-container .lleft img {
+	width: 100%
+}
+
+.top-container .left {
+	text-align: left;
+	width: 50%;
+	float: left;
+}
+
+.top-container .right {
+	text-align: right;
+	width: 49%;
+	float: left;
+}
+
+.main-title {
+	margin-top: 0.4cm;
+	text-align: center;
+	font-size: 1.6em;
+	margin-bottom: 3px;
+}
+
+.clear {
+	clear: both;
+}
+
+.info-container {
+	padding-top: 0cm;
+	/*				padding-left: 0.4cm;
+            padding-right: 0.4cm;*/
+	line-height: 26px
+}
+
+.info-container .left {
+	text-align: left;
+	width: 70%;
+	float: left;
+}
+
+.info-container .right {
+	text-align: left;
+	width: 30%;
+	float: left;
+}
+
+.main-decision {
+	padding-top: 0cm;
+	padding-left: 0.4cm;
+	padding-right: 0.4cm;
+	line-height: 26px;
+	text-align: left;
+}
+
+.drug_list {
+	/*				padding-top: 0.4cm;
+            padding-left: 0.4cm;
+            padding-right: 0.4cm;*/
+	line-height: 20px;
+	text-align: left;
+}
+
+.bottom-container {
+	padding-top: 0.1cm;
+	padding-left: 0.4cm;
+	padding-right: 0.4cm;
+	line-height: 20px;
+	text-align: justify;
+}
+
+.bottom-container .left {
+	width: 50%;
+	float: left;
+	text-align: left;
+	margin-right: 5%;
+	text-align: justify;
+}
+
+.bottom-container .right {
+	width: 45%;
+	text-align: center;
+	float: right;
+}
+
+.total_price {
+	padding-top: 0.3cm;
+	padding-left: 0.4cm;
+	padding-right: 0.4cm;
+	line-height: 20px;
+	text-align: justify;
+}
+
+.drug_list table tr {
+	padding-bottom: 0px;
+	vertical-align: top;
+}
+
+.drug_list table td {
+	vertical-align: top;
+}
+
+.bottom-fixed {
+	position: absolute;
+	bottom: 0cm;
+	left: 0.4cm;
+	right: 0.4cm;
+	width: 14cm;
+}
+
+.column-25 {
+	width: 25%;
+	float: left;
+}
+.margin-left-50 {
+    margin-left: 50px;
+    font-weight:bold;
+}
+
+</style>
+<script type="text/javascript">
+	function printMe() {
+		window.print()
+	}
+</script>
+
+</head>
+<body>
+	<!-- ======= Main ======= -->
+	<div layout:fragment="main">
+		<main class="main" id="main">
+		
+		<div class="pagetitle">
+		<a class="btn btn-primary" th:href="@{'/admin/patients/view/' + ${khambenh.patient.idBenhNhan}}"role="button">
+		<i class="bi bi-arrow-left-square"></i></i>Quay lại hồ sơ bệnh nhân</a> 
+		<a class="btn btn-success" th:href="${'/admin/khambenhs/in/' + khambenh.idKhamBenh}" role="button">
+		<i class="bi bi-printer"></i>In</a> 
+		</div>
+		
+		<!-- End Page Title -->
+		<div class="form-bolder"></div>
+		<section class="section ">
+			<div class="row">
+				<div class="col-lg-12">
+					<div class="card" style="margin-bottom: 0;">
+
+						<h5 class="card-title " style="margin-left: 15px;">Chi tiết toa thuốc</h5>
+
+						<div id="bodypage">
+							 <page size="A4" style="position:relative">
+							 
+                <div style="margin: 40px" class="topmain">
+                
+                  <div class="top-container">
+
+                    <div class="left">
+                      <strong>Quản lý Phòng khám</strong>
+                      
+                       <br>
+                      SĐT:0858750567<br>
+                      Số hồ sơ:
+                      <strong>
+                        </strong>
+                    </div>
+                    <div class="right">
+                      Địa chỉ phòng khám <br>
+                      <b>Thời gian khám: 8h-17h30</b>
+                      <br>
+                      Thời gian mở cửa: T2-T7
+                    </div>
+                    <div class="clear"></div>
+                  </div>
+                   <form method="post" th:object="${khambenh}">
+
+                  <h2 class="main-title"><strong>HỒ SƠ BỆNH ÁN</strong></h2>
+                    
+                  <div style="margin-bottom: 10px">&nbsp;</div>
+                  <div class="info-container">
+                    <h3>I. Hành chính</h3>
+                    <div class="left">
+                      Họ tên:
+                      <b style="text-transform: uppercase;" th:text="${khambenh.patient.hotenBN}" ></b>
+                      <br>
+                      Địa chỉ: <span th:text="${khambenh.patient.diaChi}"  ></span> <br>
+                      Tỉnh/thành phố:<span th:text="${khambenh.patient.queQuan}" ></span> 
+                    </div>
+                    <div class="right">
+                      Giới tính: 
+                      <span th:if="${khambenh.patient.gioiTinh==0}">Nam</span>
+						<span th:if="${khambenh.patient.gioiTinh==1}">Nữ</span>
+						<span th:if="${khambenh.patient.gioiTinh==2}">Khác</span>
+
+                      <br>Tuổi:<span id="pres_ngaysinh" th:text="${khambenh.patient.tuoi}" ></span>
+                     
+                    </div>
+                    <div class="clear"></div>
+                  </div>
+                  <div>Nghề nghiệp: <span th:text="${khambenh.patient.ngheNghiep}" ></span> </div> 
+                   
+                
+                  <div>Ngày khám:<span th:text="${khambenh.ngayKB}"></span></div>
+                  <div>Bác sĩ:<span th:text="${khambenh.bacSi}"></span> </div>
+
+                  <h3>II. Khám bệnh</h3>
+                  <div >
+                  
+                    <div class="column-25">Mạch:<span th:text="${khambenh.mach}"></span> lần/phút</div>
+                    <div class="column-25">Huyết áp:<span th:text="${khambenh.huyetAp}"></span> mmHg</div>
+                    <div class="column-25">Nhiệt độ:<span th:text="${khambenh.nhietdo}"></span> Độ C</div>
+                    <div class="column-25">Cân nặng:<span th:text="${khambenh.canNang}"></span> Kg</div>
+                    <div class="column-25">Nhịp thở:<span th:text="${khambenh.nhipTho}"></span> lần/phút</div>
+                   
+                    <div style="clear: both"></div>
+                  </div>
+                  <div><b>Khám lâm sàng:</b> </div>
+
+                  <div class="margin-left-50 ">+ Tuần hoàn: </div>
+                  <p th:text="${khambenh.tuanhoan}"></p>
+                  <div class="margin-left-50 ">+ Hô hấp: </div>
+                   <p th:text="${khambenh.hohap}"></p>
+                  <div class="margin-left-50 ">+ Tiêu hoá: </div>
+                   <p th:text="${khambenh.tieuhoa}"></p>
+                  <div class="margin-left-50 ">+ Thận - Tiết niệu: </div>
+                   <p th:text="${khambenh.than}"></p>
+                  <div class="margin-left-50 ">+ Cơ - Xương - Khớp: </div>
+                   <p th:text="${khambenh.coxuong}"></p>
+                  <div class="margin-left-50 ">+ Thần kinh: </div>
+                   <p th:text="${khambenh.thankinh}"></p>
+                  <div class="margin-left-50 ">+ Tâm thần: </div>
+                   <p th:text="${khambenh.tamthan}"></p>
+                  <div class="margin-left-50 ">+ Khác: </div>
+                   <p th:text="${khambenh.khac}"></p>
+                  <div class="margin-left-50 ">
+                  </div>   
+                  <div><b>Tiền sử bệnh:</b> <p th:text="${khambenh.tiensu}"></p></div>
+                  <div><b>Dị ứng thuốc:</b> <p th:text="${khambenh.diung}"></p></div>
+
+                 
+                
+                  <h3>III. Kết luận & Hướng điều trị </h3>
+                  <h5> Kết luận </h5>
+                  <p th:text="${khambenh.chuanDoan}"></p>
+                  <br><h5>Hướng điều trị</h5>
+                  <p th:text="${khambenh.huongDT}"></p>
+                     
+                  <div>&nbsp;</div>
+                  <div><b>Hẹn ngày tái khám lại:</b>
+                    <span th:text="${khambenh.ngayTK}"></span></div>
+                   </form>  
+
+                </div>
+              </page>
+
+						</div>
+					</div>
+
+				</div>
+			</div>
+
+
+		</section>
+		 
+                  
+
+		</main>
+
+
+	</div>
+
+
+</body>
+</html>

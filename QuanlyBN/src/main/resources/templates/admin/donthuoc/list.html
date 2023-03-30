@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+     xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+     layout:decorate="~{admin/index.html}">
+   <head>
+   <title>Thông tin thuốc</title>
+    <meta content="" name="description">
+    <meta content="" name="keywords">
+   
+   </head>
+<body> 
+               <!-- ======= Main ======= -->
+               <div layout:fragment="main">
+                <main id="main" class="main">
+        <div class="pagetitle">
+            <h1>Kho thuốc</h1>
+            <nav><ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="index.html">Trang chủ</a></li>
+                <li class="breadcrumb-item">Thuốc</li>
+                <li class="breadcrumb-item active">Kho thuốc</li>
+            </ol></nav>
+        </div>
+
+        <section class="section" >
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="card">
+                      <div class="card-body">
+                        <h5 class="card-title">Quản lý thuốc</h5>
+                        <div class="dataTable-wrapper dataTable-loading no-footer sortable searchable fixed-columns">
+
+                             <div class="dataTable-top">                              
+                               
+                                <div class="dataTable-search">
+                                <form th:action="@{/thuocs/search}">
+                                     <label>Tìm kiếm:</label>
+                                    <input class="dataTable-input" placeholder="Tên thuốc" type="text" name="nameThuoc" id="nameThuoc">
+                                   
+                                    </form>
+                                </div>
+                            </div>
+                            <div class="dataTable-container table-responsive">
+                              <table class="table datatable dataTable-table table-bordered">
+                                  <thead>
+                                      <tr class="table-light">
+                                          
+                                          <th class="first" scope="col" data-sortable="" style="min-width:150px;width:150px;">
+                                              <a href="#" class="dataTable-sorter">Mã thuốc</a>
+                                          </th>
+                                          <th scope="col" data-sortable="" style="min-width:220px;width:220px;">
+                                              <a href="#" class="dataTable-sorter">Tên thuốc</a>
+                                          </th>
+                                          <th scope="col" data-sortable="" style="min-width:150px;width:150px;">
+                                            <a href="#" class="dataTable-sorter">Loại thuốc</a>
+                                        </th>
+                                          <th scope="col" data-sortable="" style="min-width:100px;width: 100px;">
+                                              <a href="#" class="dataTable-sorter">Đơn vị</a>
+                                          </th>
+                                          <th scope="col" data-sortable="" style="min-width:120px;width: 120px;">
+                                              <a href="#" class="dataTable-sorter">SL tồn kho</a>
+                                          </th>
+                                          <th scope="col" data-sortable="" style="min-width:100px;width:100px;">
+                                              <a href="#" class="dataTable-sorter">Đơn giá</a>
+                                          </th>
+                                          
+                                         <th class="end" style="min-width:100px;width:100px;">
+                                          <a href="#" class="dataTable-sorter"></a>
+                                   </th>
+                                      </tr>
+                                  </thead>
+                                  <tbody>                                
+                                    <tr class="tb-white" th:each=" thuoc: ${thuocs}">
+                                       
+                                        <td class="first"  scope="row" th:text="${thuoc.idThuoc}"></td>
+                                        <td th:text="${thuoc.nameThuoc}"></td>
+                                        <td>[[${thuoc.loaiThuoc}]]</td>
+                                        <td>[[${thuoc.donvi}]]</td>
+                                        <td>[[${thuoc.soluong}]]</td>
+                                        <td>[[${thuoc.dongia}]]</td>
+                                       
+                                        <td class="end">
+                                           <a class="btn btn-primary" th:href="${'/admin/donthuoc/add/'+ thuoc.idThuoc}" role="button"><i class="bi bi-plus"></i></a>
+
+                                        </td>                                      
+                                    </tr>
+                              </table>
+                          </div>
+                               
+                            <div class="dataTable-bottom" style="position:sticky;bottom:0;background:#fff;z-index:50;">
+                               
+                                <div class="dataTable-dropdown">
+                                    <label>
+                                        <select class="dataTable-selector">option value="5">5</option>
+                                            <option value="10" selected="">10</option>
+                                            <option value="15">15</option>
+                                            <option value="20">20</option>
+                                            <option value="25">25</option>
+                                        </select> bản ghi 1 trang
+                                    </label>
+                                    </div>
+                                <nav aria-label="Page navigation example " >
+                                  <ul class="pagination ">
+                                    <li class="page-item">
+                                      <a class="page-link" href="#" aria-label="Previous">
+                                        <span aria-hidden="true">&laquo;</span>
+                                      </a>
+                                    </li>
+                                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                                    <li class="page-item">
+                                      <a class="page-link" href="#" aria-label="Next">
+                                        <span aria-hidden="true">&raquo;</span>
+                                      </a>
+                                    </li>
+                                  </ul>
+                                </nav>
+                              </div>   
+                            </div>
+                       
+                          </div>
+
+                    </div>
+                </div>
+            </div>
+        </section>
+       
+     
+    </main>
+               
+               </div>
+
+
+</body>
+</html>

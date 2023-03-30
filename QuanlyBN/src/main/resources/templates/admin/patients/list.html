@@ -17,7 +17,7 @@ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 		<h1>Danh sách bệnh nhân</h1>
 		<nav>
 			<ol class="breadcrumb">
-				<li class="breadcrumb-item"><a href="index.html">Trang chủ</a></li>
+				<li class="breadcrumb-item"><a th:href="@{/admin/home}">Trang chủ</a></li>
 				<li class="breadcrumb-item">Bệnh nhân</li>
 				<li class="breadcrumb-item active">Danh sách bệnh nhân</li>
 			</ol>
@@ -31,26 +31,33 @@ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 						<h5 class="card-title">Danh sách bệnh nhân</h5>
 						
 						<div class="dataTable-wrapper dataTable-loading no-footer sortable searchable fixed-columns">                           
-						<!--  	<div th:if="@{message !=null}" class="alert alert-primary" role="alert">
+						<!--  	<div th:if="{message !=null}" class="alert alert-primary" role="alert">
 						<i>[[${message}]]</i></div> -->
 						
-						<div th:if="@{message !=null}" class="alert alert-success alert-dismissible fade show" role="alert"><i class="bi bi-check-circle me-1"></i>
+						<div th:if="${message !=null}" class="alert alert-success alert-dismissible fade show" role="alert"><i class="bi bi-check-circle me-1"></i>
 						   <i>[[${message}]]</i>
                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                        </div>
                        
 							<div class="dataTable-top">
 								<div class="dataTable-dropdown">
-									<a class="btn btn-primary"th:href="@{/patients/add}" role="button">
+									<a class="btn btn-primary"th:href="@{/admin/patients/add}" role="button">
 									<i class="bi bi-plus-lg"></i> Thêm mới bệnh nhân</a>
+									
+									
 								</div>
 								<div class="dataTable-search">
-                                <form th:action="@{/patients/search}">
+                                <form th:action="@{/admin/patients/search}">
                                      <label>Tìm kiếm:</label>
                                     <input class="dataTable-input" placeholder="Tên bệnh nhân" type="text" name="hotenBN" id="hotenBN">
+                                    <button type="submit" class="btn btn-primary">Tìm</button>
                                     </form>
                                 </div>
 							</div>
+							<div th:if="${message1 !=null}" class="alert alert-danger alert-dismissible fade show" role="alert"><i class="bi bi-exclamation-triangle"></i>
+						   <i>[[${message1}]]</i>
+                           <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                       </div>
 							
 							<div class="dataTable-container table-responsive">
 								<table class="table datatable dataTable-table table-bordered">
@@ -78,11 +85,14 @@ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 												class="dataTable-sorter">Tuổi</a></th>
 											<th scope="col" data-sortable=""
 												style="min-width: 150px; width: 150px;"><a href="#"
-												class="dataTable-sorter">Đối tượng</a></th>
+												class="dataTable-sorter">Quê quán</a></th>
+												<th scope="col" data-sortable=""
+												style="min-width: 160px; width: 160px;"><a href="#"
+												class="dataTable-sorter">Nghề nghiệp</a></th>
 											<th scope="col" data-sortable=""
 												style="min-width: 350px; width: 350px;"><a href="#"
-												class="dataTable-sorter">Điạ chỉ</a></th>
-											<th class="end" style="min-width: 200px; width: 200px;">
+												class="dataTable-sorter">Địa chỉ</a></th>
+											<th class="end" style="min-width: 230px; width: 230px;">
 												<a href="#" class="dataTable-sorter">Chức năng</a>
 											</th>
 										</tr>
@@ -95,18 +105,24 @@ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 											<td th:text="${patient.hotenBN}"></td>
 											<td th:text="${patient.CCCD}"></td>
 											<td th:text="${patient.ngaysinh}"></td>
-											<td th:text="${patient.gioiTinh}"></td>
+											<td  >
+											   <span th:if="${patient.gioiTinh==0}">Nam</span>
+											    <span th:if="${patient.gioiTinh==1}">Nữ</span>
+											     <span th:if="${patient.gioiTinh==2}">Khác</span>
+											</td>
 											<td th:text="${patient.tuoi}"></td>
-											<td th:text="${patient.doituong}"></td>
+											<td  th:text="${patient.queQuan}"></td>
+											<td  th:text="${patient.ngheNghiep}"></td>
 											<td th:text="${patient.diaChi}"></td>
 											<td class="end">
-											<a class="btn btn-info" th:href="@{'/patients/view/' + ${patient.idBenhNhan}}"role="button"><i class="bi bi-info-circle"></i></a> 
-											<a class="btn btn-dark" th:href="@{'/patients/edit/' + ${patient.idBenhNhan}}"  role="button"><i class="bi bi-pencil-square"></i></a> 
+											<a class="btn btn-warning" th:href="${'/admin/tiepnhans/' + patient.idBenhNhan}"role="button"><i class="bi bi-box-arrow-right"></i></a>
+											<a class="btn btn-info" th:href="@{'/admin/patients/view/' + ${patient.idBenhNhan}}"role="button"><i class="bi bi-info-circle"></i></a> 
+											<a class="btn btn-dark" th:href="@{'/admin/patients/edit/' + ${patient.idBenhNhan}}"  role="button"><i class="bi bi-pencil-square"></i></a> 
 											<a class="btn btn-danger" role="button"
 											    th:data-id="${patient.idBenhNhan}"
 											    th:data-name="${patient.hotenBN}"
 											    onclick="showConfirmDialog(this.getAttribute('data-id'),this.getAttribute('data-name'))">
-											    <i class="bi bi-x-lg"></i>
+											    <i class="bi bi-trash"></i>
 											    </a>
 											 </td>
 										</tr>
@@ -116,7 +132,7 @@ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 								<script>
         function showConfirmDialog(id,name) {
             $('#hotenBN').text(name);
-            $('#yes').attr('href', '/patients/delete/' + id );
+            $('#yes').attr('href', '/admin/patients/delete/' + id );
             $('#confirmId').modal('show');
         }
 
@@ -128,10 +144,10 @@ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
                                                  <h5 class="modal-title">Cảnh báo</h5>
                                                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                              </div>
-                                             <div class="modal-body">Bạn có chắc chắn muốn xóa "<span id="hotenBN"></span>" ?</div>
+                                             <div class="modal-body">Bạn có chắc chắn muốn xóa <span id="hotenBN"></span> ?</div>
                                              <div class="modal-footer">
                                                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
-                                                 <a id="yes" type="button" class="btn btn-primary">Có</a>
+                                                 <a id="yes" type="button" class="btn btn-danger">Xóa</a>
                                              </div>
                                         </div>
                                     </div>
@@ -146,9 +162,8 @@ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
                                     bản ghi
                                   </div> -->
 								<div class="dataTable-dropdown">
-									<label> <select class="dataTable-selector">option
-											value="5">5
-											</option>
+									<label> <select class="dataTable-selector">
+									        <option value="5">5</option>
 											<option value="10" selected="">10</option>
 											<option value="15">15</option>
 											<option value="20">20</option>

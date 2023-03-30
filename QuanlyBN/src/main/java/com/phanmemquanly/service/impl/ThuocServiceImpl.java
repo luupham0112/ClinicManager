@@ -1,9 +1,11 @@
 package com.phanmemquanly.service.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Function;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -11,12 +13,19 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.repository.query.FluentQuery.FetchableFluentQuery;
 import org.springframework.stereotype.Service;
 
+import com.phanmemquanly.dao.ThuocDao;
 import com.phanmemquanly.domain.Thuoc;
+import com.phanmemquanly.model.ThuocDto;
 import com.phanmemquanly.repository.ThuocRepository;
 import com.phanmemquanly.service.ThuocService;
+import com.phanmemquanly.service.mapper.ThuocMapper;
+
+import jakarta.transaction.Transactional;
 
 @Service
+@Transactional
 public class ThuocServiceImpl implements ThuocService {
+	
 	ThuocRepository thuocRepository;
 
 	public ThuocServiceImpl(ThuocRepository thuocRepository) {
@@ -131,6 +140,31 @@ public class ThuocServiceImpl implements ThuocService {
 	public void deleteAll() {
 		thuocRepository.deleteAll();
 	}
+	@Override
+	public Thuoc find(int id) {
+		return thuocRepository.getOne(id);
+	}
 	
+	// don thuoc
+	
+	@Autowired
+private ThuocDao thuocDAO;
+
+@Autowired
+private ThuocMapper thuocMapper;
+
+
+@Override
+public List<ThuocDto> getThuocs() {
+
+	List<Thuoc> thuocs= thuocDAO.getThuocs();
+
+	List<ThuocDto> thuocDTOList = new ArrayList<ThuocDto>();
+
+	for(Thuoc p :thuocs) {
+		thuocDTOList.add(thuocMapper.mapToDTO(p));
+	}
+	return thuocDTOList;
+}
 
 }

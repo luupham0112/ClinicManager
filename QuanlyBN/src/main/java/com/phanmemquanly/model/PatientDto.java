@@ -2,8 +2,14 @@ package com.phanmemquanly.model;
 
 import java.io.Serializable;
 import java.sql.Date;
+import java.util.ArrayList;
+import java.util.List;
 
+import org.hibernate.validator.constraints.Length;
+
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -12,21 +18,43 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class PatientDto implements Serializable {
-	@NotEmpty
+	
 	private int idBenhNhan;	
+	@NotEmpty
 	private String hotenBN;
+	@Length(min=9)
 	private String CCCD;
+	@NotNull
 	private Date ngaysinh;
+	
 	private int gioiTinh;
+	@Min(0)
 	private int tuoi;
-	private int doituong;
+	
 	private String diaChi;
 	private Boolean isEdit=false;
+	private String queQuan;
+	private String ngheNghiep;
 	
-	 
-	public PatientDto() {
-		
+	List<DonthuocDto> donthuocDtos= new ArrayList<>();
+	
+	
+	
+
+	public String getQueQuan() {
+		return queQuan;
 	}
+	public void setQueQuan(String queQuan) {
+		this.queQuan = queQuan;
+	}
+	public String getNgheNghiep() {
+		return ngheNghiep;
+	}
+	public void setNgheNghiep(String ngheNghiep) {
+		this.ngheNghiep = ngheNghiep;
+	}
+	 
+
 	public Boolean getIsEdit() {
 		return isEdit;
 	}
@@ -70,12 +98,8 @@ public class PatientDto implements Serializable {
 		this.tuoi = tuoi;
 	}
 	
-	public int getDoituong() {
-		return doituong;
-	}
-	public void setDoituong(int doituong) {
-		this.doituong = doituong;
-	}
+	
+	
 	public String getDiaChi() {
 		return diaChi;
 	}

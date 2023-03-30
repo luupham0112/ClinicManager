@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{admin/index.html}">
+<head>
+<title>Danh sách bệnh án</title>
+<meta content="" name="description">
+<meta content="" name="keywords">
+</head>
+<body>
+	<div layout:fragment="main">
+	<!-- =========== Main ============== -->
+              <main id="main" class="main">
+                <div class="pagetitle">
+                    <h1>Danh sách hồ sơ bệnh án</h1>
+                    <nav><ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a th:href="@{/admin/home}">Trang chủ</a></li>
+                        <li class="breadcrumb-item">Khám bệnh</li>
+                        <li class="breadcrumb-item active">Danh sách bệnh án</li>
+                    </ol></nav>
+                </div>
+                <section class="section" >
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="card">
+                              <div class="card-body">
+                                <h5 class="card-title">Danh sách hồ sơ bệnh án</h5>
+                                <div class="dataTable-wrapper dataTable-loading no-footer sortable searchable fixed-columns">
+                                 <div class="dataTable-top">                             
+                                 
+                                <div class="dataTable-search">
+                                <form th:action="@{/admin/khambenhs/search}">
+                                     <label>Từ khóa:</label>
+                                    <input class="dataTable-input" placeholder="Tìm kiếm theo tên bác sĩ" type="text" name="bacsi" id="bacsi">
+                                    <button type="submit" class="btn btn-primary">Tìm</button>
+                                 </form>
+                                </div>
+                            </div>
+                           <div th:if="${message !=null}" class="alert alert-danger alert-dismissible fade show" role="alert"><i class="bi bi-exclamation-triangle"></i>
+						   <i>[[${message}]]</i>
+                           <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                       </div>
+        
+                                   
+                                  
+                                        <div class="dataTable-container table-responsive">
+                                            <table class="table datatable dataTable-table table-bordered">
+                                                <thead>
+                                                    <tr class="table-light">
+                                                    <th scope="col" data-sortable="" style="min-width:200px;width:200px;">
+                                                             <a href="#" class="dataTable-sorter">Số khám bệnh</a>
+                                                        </th>
+                                                        <th  style="min-width:200px;width:200px;">
+                                                           <a href="#" class="dataTable-sorter">Mã bệnh nhân </a>              
+                                                        </th>
+                                                         
+                                                        <th scope="col" data-sortable="" style="min-width:200px;width:200px;">
+                                                            <a href="#" class="dataTable-sorter">Họ và tên</a>
+                                                        </th>
+                                                        <th scope="col" data-sortable="" style="min-width:200px;width:200px;">
+                                                            <a href="#" class="dataTable-sorter">Ngày KB</a>
+                                                        </th>
+                                                        <th scope="col" data-sortable="" style="min-width:200px;width:200px;">
+                                                            <a href="#" class="dataTable-sorter">Bác sĩ</a>
+                                                        </th>
+                                                        <th scope="col" data-sortable="" style="min-width:200px;width:200px;">
+                                                            <a href="#" class="dataTable-sorter">Xem chi tiết</a>
+                                                        </th>
+                                                       
+                                                       
+                                                      
+                                                    </tr>
+                                                </thead>
+                                                <tbody>                                
+                                                  <tr class="tb-white" th:each=" khambenh, iStat: ${khambenhs}" >
+                                                      <td class="first"  scope="row" th:text="${khambenh.idKhamBenh}"></td>
+                                                      <td  th:text="${khambenh.patient.idBenhNhan}"></td>
+                                                      <td th:text="${khambenh.patient.hotenBN}"></td>
+                                                      <td  th:text="${khambenh.ngayKB}"></td>
+                                               <!--       <td> <img th:src="@{${'/imageKetqua/'+khambenh.ketqua1}}"  height="100px" width="100px"></td>--> 
+                                                      <td  th:text="${khambenh.bacSi}"></td>
+                                                      <td>
+                                                      <a class="btn btn-info" th:href="${'/admin/patients/benhan/' + khambenh.idKhamBenh}" role="button">
+                                                       <i class="bi bi-info-circle"></i></a>
+                                                        <a class="btn btn-danger" role="button"
+											    th:data-id="${khambenh.idKhamBenh}"
+											    
+											    onclick="showConfirmDialog(this.getAttribute('data-id'))">
+											    <i class="bi bi-trash"></i>
+											    </a>
+                                                       </td>
+                                                                                                   
+                                                  </tr>
+                                                                      
+                                                </tbody>
+                                            </table>
+                                            <script>
+        function showConfirmDialog(id) {
+         
+            $('#yes').attr('href', '/admin/khambenhs/delete/' + id );
+            $('#confirmId').modal('show');
+        }
+
+     </script>
+     <div class="modal fade" id="confirmId" tabindex="-1" aria-hidden="true" role="dialog">
+                                   <div class="modal-dialog">
+                                       <div class="modal-content">
+                                            <div class="modal-header">
+                                                 <h5 class="modal-title">Cảnh báo</h5>
+                                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                             </div>
+                                             <div class="modal-body">Bạn có chắc chắn muốn xóa</div>
+                                             <div class="modal-footer">
+                                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+                                                 <a id="yes" type="button" class="btn btn-danger">Xóa</a>
+                                             </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                        </div> 
+                                        <div class="dataTable-bottom" style="position:sticky;bottom:0;background:#fff;z-index:50;">
+                                    <div class="dataTable-dropdown">
+									
+								</div>
+							  
+                                          <nav aria-label="Page navigation example " >
+                                            <ul class="pagination ">
+                                              <li class="page-item">
+                                                <a class="page-link" href="#" aria-label="First">
+                                              
+                                                  <span aria-hidden="true">&laquo;</span>
+                                                </a>
+                                              </li>
+                                        	   <li class="page-item"><a class="page-link" >Preview</a></li>
+                                               <li class="page-item"><a class="page-link" >Next</a></li>
+                                             
+                                              <li class="page-item">
+                                                <a class="page-link" href="#" aria-label="Last" >
+                                                  <span aria-hidden="true">&raquo;</span>
+                                                </a>
+                                              </li>
+                                             
+                                            </ul>
+                                          </nav>
+                                        
+                                        </div>
+                                    </div>
+                               
+                                  </div>
+        
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            
+            </main>
+
+		
+	</div>
+
+</body>
+</html>

@@ -35,6 +35,47 @@ public class Thuoc  implements Serializable{
 	private int soluong;
 	@Column(nullable=false)
 	private double dongia;
+	@Column(columnDefinition = "nvarchar(100)")
+	private String dangThuoc;
+	@Column(columnDefinition = "nvarchar(100)")
+	private String dongGoi;
+	@Column(columnDefinition = "nvarchar(100)")
+	private String phuongThuc;
+	@Column(nullable=false)
+	private int thuocNgoai;
+	
+	public String getDangThuoc() {
+		return dangThuoc;
+	}
+	public void setDangThuoc(String dangThuoc) {
+		this.dangThuoc = dangThuoc;
+	}
+	public String getDongGoi() {
+		return dongGoi;
+	}
+	public void setDongGoi(String dongGoi) {
+		this.dongGoi = dongGoi;
+	}
+	public String getPhuongThuc() {
+		return phuongThuc;
+	}
+	public void setPhuongThuc(String phuongThuc) {
+		this.phuongThuc = phuongThuc;
+	}
+	public int getThuocNgoai() {
+		return thuocNgoai;
+	}
+	public void setThuocNgoai(int thuocNgoai) {
+		this.thuocNgoai = thuocNgoai;
+	}
+	public Set<DonthuocDetail> getDonthuocDetails() {
+		return donthuocDetails;
+	}
+	public void setDonthuocDetails(Set<DonthuocDetail> donthuocDetails) {
+		this.donthuocDetails = donthuocDetails;
+	}
+	
+	
 	
 	@OneToMany(mappedBy = "thuoc", cascade = CascadeType.ALL)
 	private Set<DonthuocDetail> donthuocDetails;
